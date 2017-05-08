@@ -7,7 +7,7 @@ public class Truck{
   private String truck_status;
   private int truck_cost;
 
-  public Truck(int truck_ID, String truck_type, String truck_status, String truck_cost){
+  public Truck(int truck_ID, String truck_type, String truck_status, int truck_cost){
     this.truck_ID = truck_ID;
     this.truck_type = truck_type; //"A001" "AA01" "B001" "BB01" "C001" "CC01" "CCC1" "K001"
     this.truck_status = truck_status; //"Ok" "Reparation" "Reserv" "Skada"
@@ -32,7 +32,8 @@ public class Truck{
   @Override
   public boolean equals(Object o){
     if (o instanceof Truck) {
-      if (o.truck_ID() == this.truck_ID) {
+      Truck temp = (Truck)o;
+      if (temp.truck_ID() == this.truck_ID) {
             return true;
       }
     }
