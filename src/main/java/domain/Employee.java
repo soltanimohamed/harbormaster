@@ -1,3 +1,5 @@
+package domain;
+
 public class Employee{
 private int employee_id;
 private String firstName;
