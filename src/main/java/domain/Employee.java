@@ -1,3 +1,4 @@
+package domain;
 public class Employee{
 private int employee_id;
 private String firstName;
@@ -28,6 +29,18 @@ public void set_driving_license_ID(int driving_license_ID){this.driving_license_
 public void set_status_ID(int status_ID){this.status_ID = status_ID;}
 public void set_schedule_ID(int schedule_ID){this.schedule_ID = schedule_ID;}
 
+@Override
+public boolean equals(Object o){
+  if( o instanceof Employee){
+    Employee e = (Employee) o;
+    if(this.employee_id() == e.employee_id){
+      return true;
+    }}
+    return false;}
 
+@Override
+public String toString(){
+  return employee_id + " " + firstName + " " + lastName + " " + driving_license_ID + " " + status_ID + " " + schedule_ID;
+}
 
 }
