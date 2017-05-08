@@ -1,6 +1,6 @@
 PRAGMA foreign_keys=ON;
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, Name text not null, Driving_license_ID integer not null, Status_ID integer not null, Schedule_ID integer);
+CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, FirstName text not null, LastName text not null, Driving_license_ID integer not null, Status_ID integer not null, Schedule_ID integer);
 INSERT INTO "employee" (Name, Driving_license_ID, Status_ID, Schedule_ID) VALUES("Jonas", "A",1,1);
 
 CREATE TABLE IF NOT EXISTS employee_status(Status_ID integer primary key not null, Status text not null);
