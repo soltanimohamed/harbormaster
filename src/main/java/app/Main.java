@@ -8,6 +8,7 @@ public class Main{
   Scanner scan = new Scanner(System.in);
   Scanner scan1 = new Scanner(System.in);
   System.out.println("1: Add  Employee: ");
+  System.out.println("2: Add  Truck: ");
   System.out.println("8: exit");
   String answer = scan.nextLine();
   if(answer.equals("1")){
@@ -26,6 +27,17 @@ public class Main{
      storage.addEmployee(new Employee(id, first, last, driving, status, schedule));
      //System.out.println("Congratulations:the employee has been added");
     }
+    if(answer.equals("2")){
+      System.out.println("Enter truck_ID: ");
+       int id = scan.nextInt();
+       System.out.println("Enter truck_type: ");
+       String type = scan1.nextLine();
+       System.out.println("Enter truck_status: ");
+       String status = scan1.nextLine();
+       System.out.println("Enter truck_cost: ");
+        int cost = scan.nextInt();
+       storage.addTruck(new Truck(id, type, status, cost));
+     }
     else if(answer.equals("8")){
       System.exit(1);
     }
