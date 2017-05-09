@@ -15,4 +15,14 @@ public class EmployeeTest {
 		String result = em.firstName();
 		assertEquals("jonas", result);
 	}
+	@Test
+	public void testset_lastName() {
+		String result = em.lastName();
+		assertEquals("lindberg", result);
+	}
+	/*@Test
+	public void testset_driving_license() {
+		int result = em.driving_license();
+		assertEquals(2, result);
+	}*/
 }

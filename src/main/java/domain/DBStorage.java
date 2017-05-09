@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-/*package domain;
-public class DBStorage implements Storage{
-=======
 package domain;
 import java.sql.*;
 public class DBStorage implements Storage{
@@ -44,7 +40,5 @@ public class DBStorage implements Storage{
   public void addTruck(Truck t){};
   public void modifyTruck(int truck_id){};
   public void deleteTruck(int truck_id){};
->>>>>>> e42dd3cba3a09febaeffce9bee6eb3b6d039d38e
 
 }
-*/
