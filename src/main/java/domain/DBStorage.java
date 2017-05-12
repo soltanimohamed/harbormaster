@@ -1,5 +1,6 @@
 package domain;
 import java.sql.*;
+import java.util.Scanner;
 public class DBStorage implements Storage{
   private final static String DB_CON="jdbc:sqlite:harborDB";
   private static Connection con;
@@ -31,12 +32,48 @@ public class DBStorage implements Storage{
         stm.executeUpdate(sql);
         System.out.println("the employee " + firstName + " has been successfully added");
       }catch(SQLException e){
-        System.out.println("Wrong something went wrong" + e.getMessage());
+        System.out.println("Something went wrong when adding employee: " + e.getMessage());
       }
     }
   }
-  public void modifyEmployee(int employee_id){};
-  public void deleteEmployee(int employee_id){};
+  public void modifyEmployee(int employee_id){
+    if (hasConnection()) {
+      try {
+        System.out.println("Choose a new status for the employee:");
+        System.out.println("1: 100%");
+        System.out.println("2: 50%");
+        System.out.println("3: Sjuk");
+        System.out.println("4: VAB");
+        System.out.println("5: Studier");
+        System.out.println("6: Semester");
+        Scanner employee_status_choice = new Scanner(System.in);
+        int new_employee_status = 0;
+        do {
+          new_employee_status = employee_status_choice.nextInt();
+        } while (new_employee_status<1 || new_employee_status>6);
+        Statement stm = null;
+        String sql = "UPDATE employee SET Status_ID="+new_employee_status+" WHERE Employee_id="+employee_id;
+        System.out.println(sql);
+        stm = con.createStatement();
+        stm.executeUpdate(sql);
+        System.out.println("Employee successfully modified");
+      }catch (SQLException e) {
+        System.out.println("Something went wrong modifying employee: " + e.getMessage());
+      }
+    }
+  };
+  public void deleteEmployee(int employee_id){
+    try {
+      Statement stm = null;
+      String sql = "DELETE FROM employee WHERE Employee_id="+employee_id;
+      System.out.println(sql);
+      stm = con.createStatement();
+      stm.executeUpdate(sql);
+      System.out.println("The employee " + employee_id + "has been deleted from the database");
+    }catch (SQLException e) {
+      System.out.println("Problem deleting the employee: " + e.getMessage());
+    }
+  };
   public void addTruck(Truck t){
     if(hasConnection()){
       try{
@@ -52,11 +89,60 @@ public class DBStorage implements Storage{
         stm.executeUpdate(sql);
         System.out.println("the truck " + truck_id + " has been successfully added");
       }catch(SQLException e){
-        System.out.println("Wrong something went wrong" + e.getMessage());
+        System.out.println("Something went wrong when adding truck: " + e.getMessage());
       }
     }
   };
-  public void modifyTruck(int truck_id){};
-  public void deleteTruck(int truck_id){};
+  public void modifyTruck(int truck_id){
+    if (hasConnection()) {
+      try {
+        System.out.println("Choose a new status for the truck:");
+        System.out.println("1: Ok");
+        System.out.println("2: Reparation");
+        System.out.println("3: Reserv");
+        System.out.println("4. Skada");
+        Scanner truck_status_scanner = new Scanner(System.in);
+        int truck_status_choice = 0;
+        do {
+          truck_status_choice = truck_status_scanner.nextInt();
+        } while (truck_status_choice>4 || truck_status_choice<1);
+        String new_truck_status = null;
+        if (truck_status_choice == 1) {
+          new_truck_status = "Ok";
+        }
+        else if (truck_status_choice == 2) {
+          new_truck_status = "Reparation";
+        }
+        else if (truck_status_choice == 3) {
+          new_truck_status = "Reserv";
+        }
+        else if (truck_status_choice == 4) {
+          new_truck_status = "Skada";
+        }
+        Statement stm = null;
+        String sql = "UPDATE truck SET Truck_status='"+new_truck_status+"' WHERE Truck_id="+truck_id;
+        System.out.println(sql);
+        stm = con.createStatement();
+        stm.executeUpdate(sql);
+        System.out.println("the truck " + truck_id + " has been successfully modified");
+      }catch (SQLException e) {
+        System.out.println("Problem modifying truck: " + e.getMessage());
+      }
+    }
+  };
+  public void deleteTruck(int truck_id){
+    if (hasConnection()) {
+      try {
+        Statement stm = null;
+        String sql = "DELETE FROM truck WHERE Truck_id="+truck_id;
+        System.out.println(sql);
+        stm = con.createStatement();
+        stm.executeUpdate(sql);
+        System.out.println("The truck " + truck_id + " has been deleted from the database");
+      }catch (SQLException e) {
+        System.out.println("Problem deleting truck: " + e.getMessage());
+      }
+    }
+  };
 
 }

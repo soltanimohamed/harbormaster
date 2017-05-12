@@ -9,9 +9,13 @@ public class Main{
   Scanner scan1 = new Scanner(System.in);
   System.out.println("1: Add  Employee: ");
   System.out.println("2: Add  Truck: ");
+  System.out.println("3: Delete Employee");
+  System.out.println("4: Delete Truck");
+  System.out.println("5: Modify Employee (change status)");
+  System.out.println("6: Modify Truck (change status)");
   System.out.println("8: exit");
   String answer = scan.nextLine();
-  if(answer.equals("1")){
+  if(answer.equals("1")){ //Add employee
     System.out.println("Enter Employee_ID: ");
      int id = scan.nextInt();
      System.out.println("Enter firstName: ");
@@ -27,7 +31,7 @@ public class Main{
      storage.addEmployee(new Employee(id, first, last, driving, status, schedule));
      //System.out.println("Congratulations:the employee has been added");
     }
-    if(answer.equals("2")){
+    if(answer.equals("2")){ //Add truck
       System.out.println("Enter truck_ID: ");
        int id = scan.nextInt();
        System.out.println("Enter truck_type: ");
@@ -37,6 +41,30 @@ public class Main{
        System.out.println("Enter truck_cost: ");
         int cost = scan.nextInt();
        storage.addTruck(new Truck(id, type, status, cost));
+     }
+     if (answer.equals("3")) { //Delete employee
+       System.out.println("Enter employee id:");
+       Scanner option3 = new Scanner(System.in);
+       int id = option3.nextInt();
+       storage.deleteEmployee(id);
+     }
+     if (answer.equals("4")) { //Delete truck
+       System.out.println("Enter truck id:");
+       Scanner option4 = new Scanner(System.in);
+       int id = option4.nextInt();
+       storage.deleteTruck(id);
+     }
+     if (answer.equals("5")) { //Modify employee
+       Scanner option5 = new Scanner(System.in);
+       System.out.println("Enter employee id:");
+       int id = option5.nextInt();
+       storage.modifyEmployee(id);
+     }
+     if (answer.equals("6")) { //Modify truck
+       Scanner option6 = new Scanner(System.in);
+       System.out.println("Enter truck ID:");
+       int id = option6.nextInt();
+       storage.modifyTruck(id);
      }
     else if(answer.equals("8")){
       System.exit(1);
