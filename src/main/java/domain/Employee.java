@@ -40,7 +40,7 @@ public boolean equals(Object o){
 
 @Override
 public String toString(){
-  return employee_id + " " + firstName + " " + lastName + " " + driving_license_ID + " " + status_ID + " " + schedule_ID;
+  return employee_id + "," + firstName + "," + lastName + "," + driving_license_ID + "," + status_ID + "," + schedule_ID;
 }
 
 }
