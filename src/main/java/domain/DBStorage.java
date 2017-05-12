@@ -37,7 +37,25 @@ public class DBStorage implements Storage{
   }
   public void modifyEmployee(int employee_id){};
   public void deleteEmployee(int employee_id){};
-  public void addTruck(Truck t){};
+  public void addTruck(Truck t){
+    if(hasConnection()){
+      try{
+        Statement stm = null;
+        int truck_id = t.truck_ID();
+        String truck_type = t.truck_type();
+        String truck_status = t.truck_status();
+        int truck_cost = t.truck_cost();
+        String sql = "INSERT INTO truck(Truck_id,Truck_type,Truck_status, Truck_cost) VALUES(" + truck_id +
+        ",'" + truck_type + "','"+ truck_status + "'," + truck_cost + ")";
+        System.out.println(sql);
+        stm = con.createStatement();
+        stm.executeUpdate(sql);
+        System.out.println("the truck " + truck_id + " has been successfully added");
+      }catch(SQLException e){
+        System.out.println("Wrong something went wrong" + e.getMessage());
+      }
+    }
+  };
   public void modifyTruck(int truck_id){};
   public void deleteTruck(int truck_id){};
 
