@@ -21,7 +21,7 @@ public Employee(int employee_id, String firstName, String lastName, int gender_I
 public int employee_id(){ return employee_id;}
 public String firstName(){ return firstName;}
 public String lastName(){ return lastName;}
-public String gender_ID(){ return gender_ID;}
+public int gender_ID(){ return gender_ID;}
 public int driving_license_ID(){ return driving_license_ID;}
 public int status_ID(){ return status_ID;}
 public int schedule_ID(){ return schedule_ID;}

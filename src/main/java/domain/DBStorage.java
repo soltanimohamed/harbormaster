@@ -192,7 +192,7 @@ public class DBStorage implements Storage{
         ResultSet rs = con.createStatement().executeQuery(sql);
         if(rs.next()){
         Employee  em = new Employee(rs.getInt("Employee_ID"), rs.getString("FirstName"), rs.getString("LastName"),
-                        rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+                        rs.getInt("Gender_ID"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
           profile =  em.toString();
         }
       }catch (SQLException e) {
