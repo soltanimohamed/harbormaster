@@ -22,13 +22,15 @@ public class DBStorage implements Storage{
         Statement stm = null;
         boolean firstName_ok = false;
         boolean lastName_ok = false;
+        boolean gender_ok = false;
         boolean drivingLicenseID_ok = false;
         boolean statusID_ok = false;
         boolean scheduleID_ok = false;
-        
+
         int employee_id = em.employee_id();
         String firstName = em.firstName();
         String lastName = em.lastName();
+        int gender_ID = em.gender_ID();
         int driving_license_ID = em.driving_license_ID();
         int status_ID = em.status_ID();
         int schedule_ID = em.schedule_ID();
@@ -37,6 +39,9 @@ public class DBStorage implements Storage{
         }
         if(lastName.length()>0){
         	lastName_ok = true;
+        }
+        if (gender_ID > 0 && gender_ID < 4) {
+          gender_ok = true;
         }
         if(driving_license_ID > 0 && driving_license_ID < 9){
         	drivingLicenseID_ok = true;
@@ -47,9 +52,9 @@ public class DBStorage implements Storage{
         if(schedule_ID > 0 && schedule_ID < 4){
         	scheduleID_ok = true;
         }
-        if(firstName_ok && lastName_ok && statusID_ok && scheduleID_ok && drivingLicenseID_ok){
-        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
-        	        ",'" + firstName + "','"+ lastName + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
+        if(firstName_ok && lastName_ok && gender_ok && statusID_ok && scheduleID_ok && drivingLicenseID_ok){
+        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender_ID, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
+        	        ",'" + firstName + "','"+ lastName + "'," + gender_ID + "," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
         	System.out.println(sql);
         	stm = con.createStatement();
         	stm.executeUpdate(sql);
@@ -58,7 +63,7 @@ public class DBStorage implements Storage{
         else{
         	System.out.println("Incorrect values entered. No employee added");
         }
-        
+
       }catch(SQLException e){
         System.out.println("Something went wrong when adding employee: " + e.getMessage());
       }
@@ -99,7 +104,7 @@ public class DBStorage implements Storage{
   }
   public void deleteEmployee(int employee_id){
     try {
-    	
+
     	String checkSql = "SELECT Employee_ID FROM employee";
         ResultSet rs = con.createStatement().executeQuery(checkSql);
         ArrayList<Integer> existing_IDs = new ArrayList<Integer>();
@@ -117,7 +122,7 @@ public class DBStorage implements Storage{
         else {
         	System.out.println("No employee with given ID number");
         }
-      
+
     }catch (SQLException e) {
       System.out.println("Problem deleting the employee: " + e.getMessage());
     }

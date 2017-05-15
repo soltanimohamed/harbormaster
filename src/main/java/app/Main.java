@@ -17,19 +17,21 @@ public class Main{
   System.out.println("8: exit");
   String answer = scan.nextLine();
   if(answer.equals("1")){ //Add employee
-    System.out.println("Enter Employee_ID: ");
-     int id = scan.nextInt();
-     System.out.println("Enter firstName: ");
-     String first = scan1.nextLine();
-     System.out.println("Enter lastName: ");
-     String last = scan1.nextLine();
-     System.out.println("Enter driving_license_ID: ");
+      System.out.println("Enter Employee_ID: ");
+      int id = scan.nextInt();
+      System.out.println("Enter firstName: ");
+      String first = scan1.nextLine();
+      System.out.println("Enter lastName: ");
+      String last = scan1.nextLine();
+      System.out.println("Enter gender_ID: ");
+      int gender = scan1.nextInt();
+      System.out.println("Enter driving_license_ID: ");
       int driving = scan.nextInt();
       System.out.println("Enter status_ID: ");
-       int status = scan1.nextInt();
-       System.out.println("Enter schedule_ID: ");
-        int schedule = scan.nextInt();
-     storage.addEmployee(new Employee(id, first, last, driving, status, schedule));
+      int status = scan1.nextInt();
+      System.out.println("Enter schedule_ID: ");
+      int schedule = scan.nextInt();
+      storage.addEmployee(new Employee(id, first, last, gender, driving, status, schedule));
      //System.out.println("Congratulations:the employee has been added");
     }
     if(answer.equals("2")){ //Add truck
