@@ -31,7 +31,12 @@ public class EmployeeTest {
 		assertEquals("lindberg", em.lastName());
 		assertEquals(1, em.driving_license_ID());
 		assertEquals(1, em.status_ID());
+<<<<<<< HEAD
+		assertEquals(1, em.schedule_ID());
+	}	
+=======
 		assertEquals(1, em.schedule_ID());}
+>>>>>>> 25dbe8b961e0e9b3e03ac59253edb6a8d6ed9cf6
 	public static Employee em;
 	@BeforeClass
 	public static void start(){
@@ -50,7 +55,12 @@ public class EmployeeTest {
 		e.set_status_ID(1);
 		assertEquals(1, e.status_ID());
 		e.set_schedule_ID(1);
+<<<<<<< HEAD
+		assertEquals(1, e.schedule_ID());
+	}	
+=======
 		assertEquals(1, e.schedule_ID());}
+>>>>>>> 25dbe8b961e0e9b3e03ac59253edb6a8d6ed9cf6
 	public void testset_firstName() {
 		String result = em.firstName();
 		assertEquals("Alan", result);
