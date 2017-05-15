@@ -2,6 +2,7 @@ package domain;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Categories;
 import org.junit.experimental.categories.Categories.IncludeCategory;
@@ -30,7 +31,7 @@ public class EmployeeTest {
 		assertEquals("lindberg", em.lastName());
 		assertEquals(1, em.driving_license_ID());
 		assertEquals(1, em.status_ID());
-		assertEquals(1, em.schedule_ID());
+		assertEquals(1, em.schedule_ID());}
 	public static Employee em;
 	@BeforeClass
 	public static void start(){
@@ -49,7 +50,7 @@ public class EmployeeTest {
 		e.set_status_ID(1);
 		assertEquals(1, e.status_ID());
 		e.set_schedule_ID(1);
-		assertEquals(1, e.schedule_ID());
+		assertEquals(1, e.schedule_ID());}
 	public void testset_firstName() {
 		String result = em.firstName();
 		assertEquals("Alan", result);

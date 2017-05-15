@@ -13,6 +13,7 @@ public class Main{
   System.out.println("4: Delete Truck");
   System.out.println("5: Modify Employee (change status)");
   System.out.println("6: Modify Truck (change status)");
+  System.out.println("7: Show Employee profile");
   System.out.println("8: exit");
   String answer = scan.nextLine();
   if(answer.equals("1")){ //Add employee
@@ -65,6 +66,12 @@ public class Main{
        System.out.println("Enter truck ID:");
        int id = option6.nextInt();
        storage.modifyTruck(id);
+     }
+     if(answer.equals("7")){
+       Scanner option7 = new Scanner(System.in);
+       System.out.println("Enter employee ID:");
+       int id = option7.nextInt();
+       storage.showEmployeeProfile(id);
      }
     else if(answer.equals("8")){
       System.exit(1);

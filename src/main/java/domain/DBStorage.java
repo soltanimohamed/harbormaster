@@ -137,6 +137,24 @@ public class DBStorage implements Storage{
       }
     }
   }
+  public void showEmployeeProfile(int employee_id){
+    String profile = "";
+    if(hasConnection()){
+      try{
+        Statement stm = null;
+        String sql = "SELECT * FROM employee WHERE Employee_ID="+employee_id;
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        if(rs.next()){
+        Employee  em = new Employee(rs.getInt("Employee_ID"), rs.getString("FirstName"), rs.getString("LastName"),
+                        rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+          profile =  em.toString();
+        }
+      }catch (SQLException e) {
+        System.out.println("Problem printing employees profile: " + e.getMessage());
+      }
+    }
+   System.out.print(profile);
+  }
   public void deleteTruck(int truck_id){
     if (hasConnection()) {
       try {
