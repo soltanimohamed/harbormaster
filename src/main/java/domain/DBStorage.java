@@ -37,22 +37,29 @@ public class DBStorage implements Storage{
     }
   }
   public void modifyEmployee(int employee_id){
+    int id = employee_id;
+    String sql = "";
     if (hasConnection()) {
       try {
-        System.out.println("Choose a new status for the employee:");
-        System.out.println("1: 100%");
-        System.out.println("2: 50%");
-        System.out.println("3: Sjuk");
-        System.out.println("4: VAB");
-        System.out.println("5: Studier");
-        System.out.println("6: Semester");
-        Scanner employee_status_choice = new Scanner(System.in);
-        int new_employee_status = 0;
+        System.out.println("What do you want to change:");
+        System.out.println("1: Status");
+        System.out.println("2: Schedule");
+        System.out.println("3: Exit");
+        Scanner scan = new Scanner(System.in);
+        int value = 0;
         do {
-          new_employee_status = employee_status_choice.nextInt();
-        } while (new_employee_status<1 || new_employee_status>6);
+          value = scan.nextInt();
+        } while (value<1 || value>3);
+        if(value == 1){
+          sql = modifyStatusEmployee(id);
+        }
+        else if(value == 2){
+          sql = modifySchemaEmployee(id);
+        }
+        else{
+          System.exit(1);
+        }
         Statement stm = null;
-        String sql = "UPDATE employee SET Status_ID="+new_employee_status+" WHERE Employee_id="+employee_id;
         System.out.println(sql);
         stm = con.createStatement();
         stm.executeUpdate(sql);
@@ -61,7 +68,7 @@ public class DBStorage implements Storage{
         System.out.println("Something went wrong modifying employee: " + e.getMessage());
       }
     }
-  };
+  }
   public void deleteEmployee(int employee_id){
     try {
       Statement stm = null;
@@ -73,7 +80,7 @@ public class DBStorage implements Storage{
     }catch (SQLException e) {
       System.out.println("Problem deleting the employee: " + e.getMessage());
     }
-  };
+  }
   public void addTruck(Truck t){
     if(hasConnection()){
       try{
@@ -92,7 +99,7 @@ public class DBStorage implements Storage{
         System.out.println("Something went wrong when adding truck: " + e.getMessage());
       }
     }
-  };
+  }
   public void modifyTruck(int truck_id){
     if (hasConnection()) {
       try {
@@ -129,7 +136,7 @@ public class DBStorage implements Storage{
         System.out.println("Problem modifying truck: " + e.getMessage());
       }
     }
-  };
+  }
   public void deleteTruck(int truck_id){
     if (hasConnection()) {
       try {
@@ -143,6 +150,32 @@ public class DBStorage implements Storage{
         System.out.println("Problem deleting truck: " + e.getMessage());
       }
     }
-  };
-
+  }
+public String modifySchemaEmployee(int employee_id){
+      System.out.println("Choose a new schema for the employee:");
+      System.out.println("1: MF");
+      System.out.println("2: LS");
+      System.out.println("3: S");
+      Scanner employee_schedule_choice = new Scanner(System.in);
+      int new_employee_status = 0;
+      do {
+        new_employee_status = employee_schedule_choice.nextInt();
+      } while (new_employee_status<1 || new_employee_status>3);
+      return "UPDATE employee SET Schedule_ID="+new_employee_status+" WHERE Employee_id="+employee_id;
+}
+public String modifyStatusEmployee(int employee_id){
+      System.out.println("Choose a new status for the employee:");
+      System.out.println("1: 100%");
+      System.out.println("2: 50%");
+      System.out.println("3: Sjuk");
+      System.out.println("4: VAB");
+      System.out.println("5: Studier");
+      System.out.println("6: Semester");
+      Scanner employee_status_choice = new Scanner(System.in);
+      int new_employee_status = 0;
+      do {
+        new_employee_status = employee_status_choice.nextInt();
+      } while (new_employee_status<1 || new_employee_status>6);
+      return "UPDATE employee SET Status_ID="+new_employee_status+" WHERE Employee_id="+employee_id;
+}
 }
