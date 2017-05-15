@@ -19,18 +19,45 @@ public class DBStorage implements Storage{
     if(hasConnection()){
       try{
         Statement stm = null;
+        boolean firstName_ok = false;
+        boolean lastName_ok = false;
+        boolean drivingLicenseID_ok = false;
+        boolean statusID_ok = false;
+        boolean scheduleID_ok = false;
+        
         int employee_id = em.employee_id();
         String firstName = em.firstName();
         String lastName = em.lastName();
         int driving_license_ID = em.driving_license_ID();
         int status_ID = em.status_ID();
         int schedule_ID = em.schedule_ID();
-        String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
-        ",'" + firstName + "','"+ lastName + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
-        System.out.println(sql);
-        stm = con.createStatement();
-        stm.executeUpdate(sql);
-        System.out.println("the employee " + firstName + " has been successfully added");
+        if(firstName.length()>0){
+        	firstName_ok = true;
+        }
+        if(lastName.length()>0){
+        	lastName_ok = true;
+        }
+        if(driving_license_ID > 0 && driving_license_ID < 9){
+        	drivingLicenseID_ok = true;
+        }
+        if(status_ID > 0 && status_ID < 7){
+        	statusID_ok = true;
+        }
+        if(schedule_ID > 0 && schedule_ID < 4){
+        	scheduleID_ok = true;
+        }
+        if(firstName_ok && lastName_ok && statusID_ok && scheduleID_ok && drivingLicenseID_ok){
+        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
+        	        ",'" + firstName + "','"+ lastName + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
+        	System.out.println(sql);
+        	stm = con.createStatement();
+        	stm.executeUpdate(sql);
+        	System.out.println("the employee " + firstName + " has been successfully added");
+        }
+        else{
+        	System.out.println("Incorrect values entered. No employee added");
+        }
+        
       }catch(SQLException e){
         System.out.println("Something went wrong when adding employee: " + e.getMessage());
       }
