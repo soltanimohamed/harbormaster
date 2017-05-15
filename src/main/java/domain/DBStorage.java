@@ -111,7 +111,7 @@ public class DBStorage implements Storage{
         while(rs.next()){
         	existing_IDs.add(rs.getInt("Employee_ID"));
         }
-        if(existing_IDs.contains(employee_id) == false){
+        if(existing_IDs.contains(employee_id) == true){
         	Statement stm = null;
             String sql = "DELETE FROM employee WHERE Employee_id="+employee_id;
             System.out.println(sql);
