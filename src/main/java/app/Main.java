@@ -13,22 +13,25 @@ public class Main{
   System.out.println("4: Delete Truck");
   System.out.println("5: Modify Employee (change status)");
   System.out.println("6: Modify Truck (change status)");
+  System.out.println("7: Show Employee profile");
   System.out.println("8: exit");
   String answer = scan.nextLine();
   if(answer.equals("1")){ //Add employee
-    System.out.println("Enter Employee_ID: ");
-     int id = scan.nextInt();
-     System.out.println("Enter firstName: ");
-     String first = scan1.nextLine();
-     System.out.println("Enter lastName: ");
-     String last = scan1.nextLine();
-     System.out.println("Enter driving_license_ID: ");
+      System.out.println("Enter Employee_ID: ");
+      int id = scan.nextInt();
+      System.out.println("Enter firstName: ");
+      String first = scan1.nextLine();
+      System.out.println("Enter lastName: ");
+      String last = scan1.nextLine();
+      System.out.println("Enter gender_ID: ");
+      int gender = scan1.nextInt();
+      System.out.println("Enter driving_license_ID: ");
       int driving = scan.nextInt();
       System.out.println("Enter status_ID: ");
-       int status = scan1.nextInt();
-       System.out.println("Enter schedule_ID: ");
-        int schedule = scan.nextInt();
-     storage.addEmployee(new Employee(id, first, last, driving, status, schedule));
+      int status = scan1.nextInt();
+      System.out.println("Enter schedule_ID: ");
+      int schedule = scan.nextInt();
+      storage.addEmployee(new Employee(id, first, last, gender, driving, status, schedule));
      //System.out.println("Congratulations:the employee has been added");
     }
     if(answer.equals("2")){ //Add truck
@@ -65,6 +68,12 @@ public class Main{
        System.out.println("Enter truck ID:");
        int id = option6.nextInt();
        storage.modifyTruck(id);
+     }
+     if(answer.equals("7")){
+       Scanner option7 = new Scanner(System.in);
+       System.out.println("Enter employee ID:");
+       int id = option7.nextInt();
+       storage.showEmployeeProfile(id);
      }
     else if(answer.equals("8")){
       System.exit(1);

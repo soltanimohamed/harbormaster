@@ -1,6 +1,7 @@
 package domain;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 public class DBStorage implements Storage{
   private final static String DB_CON="jdbc:sqlite:harborDB";
   private static Connection con;
@@ -19,18 +20,50 @@ public class DBStorage implements Storage{
     if(hasConnection()){
       try{
         Statement stm = null;
+        boolean firstName_ok = false;
+        boolean lastName_ok = false;
+        boolean gender_ok = false;
+        boolean drivingLicenseID_ok = false;
+        boolean statusID_ok = false;
+        boolean scheduleID_ok = false;
+
         int employee_id = em.employee_id();
         String firstName = em.firstName();
         String lastName = em.lastName();
+        int gender_ID = em.gender_ID();
         int driving_license_ID = em.driving_license_ID();
         int status_ID = em.status_ID();
         int schedule_ID = em.schedule_ID();
-        String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
-        ",'" + firstName + "','"+ lastName + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
-        System.out.println(sql);
-        stm = con.createStatement();
-        stm.executeUpdate(sql);
-        System.out.println("the employee " + firstName + " has been successfully added");
+        if(firstName.length()>0){
+        	firstName_ok = true;
+        }
+        if(lastName.length()>0){
+        	lastName_ok = true;
+        }
+        if (gender_ID > 0 && gender_ID < 4) {
+          gender_ok = true;
+        }
+        if(driving_license_ID > 0 && driving_license_ID < 9){
+        	drivingLicenseID_ok = true;
+        }
+        if(status_ID > 0 && status_ID < 7){
+        	statusID_ok = true;
+        }
+        if(schedule_ID > 0 && schedule_ID < 4){
+        	scheduleID_ok = true;
+        }
+        if(firstName_ok && lastName_ok && gender_ok && statusID_ok && scheduleID_ok && drivingLicenseID_ok){
+        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender_ID, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
+        	        ",'" + firstName + "','"+ lastName + "'," + gender_ID + "," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
+        	System.out.println(sql);
+        	stm = con.createStatement();
+        	stm.executeUpdate(sql);
+        	System.out.println("the employee " + firstName + " has been successfully added");
+        }
+        else{
+        	System.out.println("Incorrect values entered. No employee added");
+        }
+
       }catch(SQLException e){
         System.out.println("Something went wrong when adding employee: " + e.getMessage());
       }
@@ -71,12 +104,25 @@ public class DBStorage implements Storage{
   }
   public void deleteEmployee(int employee_id){
     try {
-      Statement stm = null;
-      String sql = "DELETE FROM employee WHERE Employee_id="+employee_id;
-      System.out.println(sql);
-      stm = con.createStatement();
-      stm.executeUpdate(sql);
-      System.out.println("The employee " + employee_id + "has been deleted from the database");
+
+    	String checkSql = "SELECT Employee_ID FROM employee";
+        ResultSet rs = con.createStatement().executeQuery(checkSql);
+        ArrayList<Integer> existing_IDs = new ArrayList<Integer>();
+        while(rs.next()){
+        	existing_IDs.add(rs.getInt("Employee_ID"));
+        }
+        if(existing_IDs.contains(employee_id) == false){
+        	Statement stm = null;
+            String sql = "DELETE FROM employee WHERE Employee_id="+employee_id;
+            System.out.println(sql);
+            stm = con.createStatement();
+            stm.executeUpdate(sql);
+            System.out.println("The employee " + employee_id + " has been deleted from the database");
+        }
+        else {
+        	System.out.println("No employee with given ID number");
+        }
+
     }catch (SQLException e) {
       System.out.println("Problem deleting the employee: " + e.getMessage());
     }
@@ -136,6 +182,24 @@ public class DBStorage implements Storage{
         System.out.println("Problem modifying truck: " + e.getMessage());
       }
     }
+  }
+  public void showEmployeeProfile(int employee_id){
+    String profile = "";
+    if(hasConnection()){
+      try{
+        Statement stm = null;
+        String sql = "SELECT * FROM employee WHERE Employee_ID="+employee_id;
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        if(rs.next()){
+        Employee  em = new Employee(rs.getInt("Employee_ID"), rs.getString("FirstName"), rs.getString("LastName"),
+                        rs.getInt("Gender_ID"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+          profile =  em.toString();
+        }
+      }catch (SQLException e) {
+        System.out.println("Problem printing employees profile: " + e.getMessage());
+      }
+    }
+   System.out.print(profile);
   }
   public void deleteTruck(int truck_id){
     if (hasConnection()) {

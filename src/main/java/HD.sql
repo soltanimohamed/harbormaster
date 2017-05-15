@@ -1,7 +1,12 @@
 PRAGMA foreign_keys=ON;
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, FirstName text not null, LastName text not null, Driving_license_ID integer not null, Status_ID integer not null, Schedule_ID integer);
-INSERT INTO "employee" (FirstName, LastName, Driving_license_ID, Status_ID, Schedule_ID) VALUES("Jonas","Lindberg",1,1,1);
+CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, FirstName text not null, LastName text not null, Gender_ID integer not null, Driving_license_ID integer not null, Status_ID integer not null, Schedule_ID integer);
+INSERT INTO "employee" (FirstName, LastName, Gender_ID, Driving_license_ID, Status_ID, Schedule_ID) VALUES("Jonas","Lindberg", 1, 1, 1, 1);
+
+CREATE TABLE IF NOT EXISTS gender(Gender_ID integer primary key, Gender text not null);
+INSERT INTO "gender"(Gender) VALUES ('Male');
+INSERT INTO "gender"(Gender) VALUES ('Female');
+INSERT INTO "gender"(Gender) VALUES ('Other');
 
 CREATE TABLE IF NOT EXISTS employee_status(Status_ID integer primary key not null, Status text not null);
 INSERT INTO "employee_status"(Status) VALUES ('100%');
