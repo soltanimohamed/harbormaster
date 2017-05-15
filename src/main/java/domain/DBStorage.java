@@ -1,6 +1,7 @@
 package domain;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 public class DBStorage implements Storage{
   private final static String DB_CON="jdbc:sqlite:harborDB";
   private static Connection con;
