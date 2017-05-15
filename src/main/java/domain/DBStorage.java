@@ -98,12 +98,25 @@ public class DBStorage implements Storage{
   }
   public void deleteEmployee(int employee_id){
     try {
-      Statement stm = null;
-      String sql = "DELETE FROM employee WHERE Employee_id="+employee_id;
-      System.out.println(sql);
-      stm = con.createStatement();
-      stm.executeUpdate(sql);
-      System.out.println("The employee " + employee_id + "has been deleted from the database");
+    	
+    	String checkSql = "SELECT Employee_ID FROM employee";
+        ResultSet rs = con.createStatement().executeQuery(checkSql);
+        ArrayList<Integer> existing_IDs = new ArrayList<Integer>();
+        while(rs.next()){
+        	existing_IDs.add(rs.getInt("Employee_ID"));
+        }
+        if(existing_IDs.contains(employee_id) == false){
+        	Statement stm = null;
+            String sql = "DELETE FROM employee WHERE Employee_id="+employee_id;
+            System.out.println(sql);
+            stm = con.createStatement();
+            stm.executeUpdate(sql);
+            System.out.println("The employee " + employee_id + " has been deleted from the database");
+        }
+        else {
+        	System.out.println("No employee with given ID number");
+        }
+      
     }catch (SQLException e) {
       System.out.println("Problem deleting the employee: " + e.getMessage());
     }
