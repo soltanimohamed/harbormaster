@@ -19,50 +19,20 @@ public class DBStorage implements Storage{
   public void addEmployee(Employee em){
     if(hasConnection()){
       try{
-        Statement stm = null;
-        boolean firstName_ok = false;
-        boolean lastName_ok = false;
-        boolean gender_ok = false;
-        boolean drivingLicenseID_ok = false;
-        boolean statusID_ok = false;
-        boolean scheduleID_ok = false;
-
+        Statement stm ;
         int employee_id = em.employee_id();
         String firstName = em.firstName();
         String lastName = em.lastName();
-        int gender_ID = em.gender_ID();
+        String gender = em.gender();
         int driving_license_ID = em.driving_license_ID();
         int status_ID = em.status_ID();
         int schedule_ID = em.schedule_ID();
-        if(firstName.length()>0){
-        	firstName_ok = true;
-        }
-        if(lastName.length()>0){
-        	lastName_ok = true;
-        }
-        if (gender_ID > 0 && gender_ID < 4) {
-          gender_ok = true;
-        }
-        if(driving_license_ID > 0 && driving_license_ID < 9){
-        	drivingLicenseID_ok = true;
-        }
-        if(status_ID > 0 && status_ID < 7){
-        	statusID_ok = true;
-        }
-        if(schedule_ID > 0 && schedule_ID < 4){
-        	scheduleID_ok = true;
-        }
-        if(firstName_ok && lastName_ok && gender_ok && statusID_ok && scheduleID_ok && drivingLicenseID_ok){
-        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender_ID, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
-        	        ",'" + firstName + "','"+ lastName + "'," + gender_ID + "," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
+        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
+        	        ",'" + firstName + "','"+ lastName + "','" + gender + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
         	System.out.println(sql);
         	stm = con.createStatement();
         	stm.executeUpdate(sql);
         	System.out.println("the employee " + firstName + " has been successfully added");
-        }
-        else{
-        	System.out.println("Incorrect values entered. No employee added");
-        }
 
       }catch(SQLException e){
         System.out.println("Something went wrong when adding employee: " + e.getMessage());
@@ -192,7 +162,7 @@ public class DBStorage implements Storage{
         ResultSet rs = con.createStatement().executeQuery(sql);
         if(rs.next()){
         Employee  em = new Employee(rs.getInt("Employee_ID"), rs.getString("FirstName"), rs.getString("LastName"),
-                        rs.getInt("Gender_ID"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+                        rs.getString("Gender"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
           profile =  em.toString();
         }
       }catch (SQLException e) {
