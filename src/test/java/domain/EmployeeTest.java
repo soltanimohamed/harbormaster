@@ -18,34 +18,32 @@ public class EmployeeTest {
 	@Category(NotNull.class)
 	@Test
 	public void testEmployeeNotNull() {
-		Employee em = new Employee(1,"jonas","lindberg",1,1,1);
+		Employee em = new Employee(1,"jonas","lindberg",1,1,1,1);
 
 		assertNotNull(em);
 	}
 	@Category(Getters.class)
 	@Test
 	public void testGetEmployee() {
-		Employee em = new Employee(1,"jonas","lindberg",1,1,1);
+		Employee em = new Employee(1,"jonas","lindberg",1,1,1,1);
 		assertEquals(1, em.employee_id());
 		assertEquals("jonas", em.firstName());
 		assertEquals("lindberg", em.lastName());
 		assertEquals(1, em.driving_license_ID());
 		assertEquals(1, em.status_ID());
-<<<<<<< HEAD
+
 		assertEquals(1, em.schedule_ID());
 	}	
-=======
-		assertEquals(1, em.schedule_ID());}
->>>>>>> 25dbe8b961e0e9b3e03ac59253edb6a8d6ed9cf6
+
 	public static Employee em;
 	@BeforeClass
 	public static void start(){
-		em = new Employee(1,"Alan","Shearer",1,1,1);
+		em = new Employee(1,"Alan","Shearer",1,1,1,1);
 	}
 	@Category(Setters.class)
 	@Test
 	public void testSetEmployee(){
-		Employee e = new Employee(2,null,null,0,0,0);
+		Employee e = new Employee(2,null,null,1,0,0,0);
 		e.set_firstName("Jonathan");
 		assertEquals("Jonathan", e.firstName());
 		e.set_lastName("pieer");
@@ -55,12 +53,9 @@ public class EmployeeTest {
 		e.set_status_ID(1);
 		assertEquals(1, e.status_ID());
 		e.set_schedule_ID(1);
-<<<<<<< HEAD
 		assertEquals(1, e.schedule_ID());
 	}	
-=======
-		assertEquals(1, e.schedule_ID());}
->>>>>>> 25dbe8b961e0e9b3e03ac59253edb6a8d6ed9cf6
+
 	public void testset_firstName() {
 		String result = em.firstName();
 		assertEquals("Alan", result);
@@ -88,14 +83,14 @@ public class EmployeeTest {
 	@Category(Stringers.class)
 	@Test
 	public void  testToString(){
-		Employee e = new Employee(2,"mohamed","soltani",2,3,2);
+		Employee e = new Employee(2,"mohamed","soltani",1,2,3,2);
     String result = "2,mohamed,soltani,2,3,2";
 		assertEquals(result, e.toString());
 	}
 	@Test
 	public void testEqualsTrue(){
-		Employee e = new Employee(3,"naser","saleh",3,2,1);
-		Employee e1 = new Employee(3,"naser","saleh",3,2,1);
+		Employee e = new Employee(3,"naser","saleh",1,3,2,1);
+		Employee e1 = new Employee(3,"naser","saleh",1,3,2,1);
 	assertTrue(e.equals(e1));
 }
 @RunWith(Categories.class)
