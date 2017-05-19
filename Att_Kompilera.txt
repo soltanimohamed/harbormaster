@@ -1,0 +1,4 @@
+Instruktioner för att compilera och köra:
+
+först: gå in under katalogen: src/main/java
+sedan skriv: javac gui/MainWindow.java && java -cp ".;sqlite.jar" gui.MainWindow
