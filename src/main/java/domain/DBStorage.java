@@ -39,39 +39,40 @@ public class DBStorage implements Storage{
       }
     }
   }
-  public void modifyEmployee(int employee_id){
-    int id = employee_id;
-    String sql = "";
-    if (hasConnection()) {
+  public boolean verifyEmployee(int employee_id){
+      boolean exist = false;
+      if (hasConnection()) {
       try {
-        System.out.println("What do you want to change:");
-        System.out.println("1: Status");
-        System.out.println("2: Schedule");
-        System.out.println("3: Exit");
-        Scanner scan = new Scanner(System.in);
-        int value = 0;
-        do {
-          value = scan.nextInt();
-        } while (value<1 || value>3);
-        if(value == 1){
-          sql = modifyStatusEmployee(id);
+        String sql = "SELECT Employee_ID FROM employee WHERE Employee_ID ="+employee_id;
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        if(rs.next()){
+          exist = true;
         }
-        else if(value == 2){
-          sql = modifySchemaEmployee(id);
-        }
-        else{
-          System.exit(1);
-        }
-        Statement stm = null;
-        System.out.println(sql);
-        stm = con.createStatement();
-        stm.executeUpdate(sql);
-        System.out.println("Employee successfully modified");
       }catch (SQLException e) {
-        System.out.println("Something went wrong modifying employee: " + e.getMessage());
+        System.out.println("Something went wrong: " + e.getMessage());
       }
-    }
+      }
+      System.out.println(exist);
+      return exist;
   }
+
+  public boolean verifyTruck(int truck_id){
+      boolean exist = false;
+      if (hasConnection()) {
+      try {
+        String sql = "SELECT Truck_ID FROM truck WHERE Truck_ID ="+truck_id;
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        if(rs.next()){
+          exist = true;
+        }
+      }catch (SQLException e) {
+        System.out.println("Something went wrong: " + e.getMessage());
+      }
+      }
+      System.out.println(exist);
+      return exist;
+  }
+
   public void deleteEmployee(int employee_id){
     try {
 
@@ -116,43 +117,24 @@ public class DBStorage implements Storage{
       }
     }
   }
-  public void modifyTruck(int truck_id){
-    if (hasConnection()) {
-      try {
-        System.out.println("Choose a new status for the truck:");
-        System.out.println("1: Ok");
-        System.out.println("2: Reparation");
-        System.out.println("3: Reserv");
-        System.out.println("4. Skada");
-        Scanner truck_status_scanner = new Scanner(System.in);
-        int truck_status_choice = 0;
-        do {
-          truck_status_choice = truck_status_scanner.nextInt();
-        } while (truck_status_choice>4 || truck_status_choice<1);
-        String new_truck_status = null;
-        if (truck_status_choice == 1) {
-          new_truck_status = "Ok";
-        }
-        else if (truck_status_choice == 2) {
-          new_truck_status = "Reparation";
-        }
-        else if (truck_status_choice == 3) {
-          new_truck_status = "Reserv";
-        }
-        else if (truck_status_choice == 4) {
-          new_truck_status = "Skada";
-        }
+  public Employee getEmployee(int employee_id){
+    Employee em = null;
+    if(hasConnection()){
+      try{
         Statement stm = null;
-        String sql = "UPDATE truck SET Truck_status='"+new_truck_status+"' WHERE Truck_id="+truck_id;
-        System.out.println(sql);
-        stm = con.createStatement();
-        stm.executeUpdate(sql);
-        System.out.println("the truck " + truck_id + " has been successfully modified");
+        String sql = "SELECT * FROM employee WHERE Employee_ID="+employee_id;
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        if(rs.next()){
+        em = new Employee(rs.getInt("Employee_ID"), rs.getString("FirstName"), rs.getString("LastName"),
+                        rs.getString("Gender"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+        }
       }catch (SQLException e) {
-        System.out.println("Problem modifying truck: " + e.getMessage());
+        System.out.println("Problem printing employees profile: " + e.getMessage());
       }
     }
+   return em;
   }
+
   public void showEmployeeProfile(int employee_id){
     String profile = "";
     if(hasConnection()){
@@ -185,31 +167,19 @@ public class DBStorage implements Storage{
       }
     }
   }
-public String modifySchemaEmployee(int employee_id){
-      System.out.println("Choose a new schema for the employee:");
-      System.out.println("1: MF");
-      System.out.println("2: LS");
-      System.out.println("3: S");
-      Scanner employee_schedule_choice = new Scanner(System.in);
-      int new_employee_status = 0;
-      do {
-        new_employee_status = employee_schedule_choice.nextInt();
-      } while (new_employee_status<1 || new_employee_status>3);
-      return "UPDATE employee SET Schedule_ID="+new_employee_status+" WHERE Employee_id="+employee_id;
-}
-public String modifyStatusEmployee(int employee_id){
-      System.out.println("Choose a new status for the employee:");
-      System.out.println("1: 100%");
-      System.out.println("2: 50%");
-      System.out.println("3: Sjuk");
-      System.out.println("4: VAB");
-      System.out.println("5: Studier");
-      System.out.println("6: Semester");
-      Scanner employee_status_choice = new Scanner(System.in);
-      int new_employee_status = 0;
-      do {
-        new_employee_status = employee_status_choice.nextInt();
-      } while (new_employee_status<1 || new_employee_status>6);
-      return "UPDATE employee SET Status_ID="+new_employee_status+" WHERE Employee_id="+employee_id;
+public void modifyEmployee(int employee_id, int status_id, int schedule_id){
+  if (hasConnection()) {
+    String sql = "";
+    Statement stm;
+    try {
+        sql = "UPDATE employee SET Status_ID=" + status_id + " ,Schedule_ID=" + schedule_id + " WHERE Employee_id="+employee_id;
+      System.out.println(sql);
+      stm = con.createStatement();
+      stm.executeUpdate(sql);
+      //System.out.println("The truck " + truck_id + " has been deleted from the database");
+    }catch (SQLException e) {
+      System.out.println("Problem modifying employee: " + e.getMessage());
+    }
+  }
 }
 }
