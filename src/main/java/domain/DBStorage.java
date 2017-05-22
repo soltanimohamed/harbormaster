@@ -182,4 +182,26 @@ public void modifyEmployee(int employee_id, int status_id, int schedule_id){
     }
   }
 }
+public int inlogg(String username, String password){
+    int result = 0;
+    try{
+      String sql="SELECT admin_ID FROM admin WHERE username='" + username+
+      "' AND password='" + password + "'";
+      ResultSet rs = con.createStatement().executeQuery(sql);
+      if(rs.next()){
+      result = rs.getInt("admin_ID");
+        //System.out.println(result);
+    /*  }
+      else{
+        result = false;
+        System.out.println(result);
+      } */
+      }
+    }catch(SQLException|NullPointerException e){
+      //System.err.println("Error :" + e.getMessage());
+      System.err.println("there is an error");
+    }
+    return result;
+  }
+
 }

@@ -11,4 +11,5 @@ public interface Storage{
   public Employee getEmployee(int employee_id);
   public void modifyEmployee(int employee_id, int status_id, int schedule_id);
   public boolean verifyTruck(int truck_id);
+  public int inlogg(String username, String password);
 }
