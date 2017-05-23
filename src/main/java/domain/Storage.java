@@ -12,4 +12,5 @@ public interface Storage{
   public void modifyEmployee(int employee_id, int status_id, int schedule_id);
   public boolean verifyTruck(int truck_id);
   public int inlogg(String username, String password);
+  public void addShip(String name, String company, String volume_type);
 }
