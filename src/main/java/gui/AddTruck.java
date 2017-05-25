@@ -46,27 +46,25 @@ public class AddTruck{
     statusBox.getItems().add("Reparation");
     statusBox.getItems().add("Reserv");
     statusBox.getItems().add("Skada");
-    Label costLabel = new Label("Cost/Hour:");
-    ComboBox costBox = new ComboBox();
-    costBox.getItems().add("1000");
-    costBox.getItems().add("1500");
-    costBox.getItems().add("2000");
-    costBox.getItems().add("2500");
-    costBox.getItems().add("3000");
-    costBox.getItems().add("3500");
-    costBox.getItems().add("4000");
-    costBox.getItems().add("6000");
     Button submitButton = new Button("ok");
     submitButton.setOnAction( e ->{
-      if(idField.equals("")  ||  typeBox.getValue() == null|| statusBox.getValue() == null
-                || costBox.getValue() == null){
+      if(idField.equals("")  ||  typeBox.getValue() == null|| statusBox.getValue() == null){
     Alerts.display("Alert","Please enter all information required");  }
      else{
        try{
          String type = typeBox.getValue().toString();
          String status = statusBox.getValue().toString();
-        String costString = (costBox.getValue()).toString();
-        int cost = Integer.parseInt(costString);
+        //String costString = (costBox.getValue()).toString();
+        //int cost = Integer.parseInt(costString);
+         int cost = 0;
+          if(type.equals("A001")){cost = 1000;}
+          else if(type.equals("AA01")){cost = 1500;}
+          else if(type.equals("B001")){cost = 2000;}
+          else if(type.equals("BB01")){cost = 2500;}
+          else if(type.equals("C001")){cost = 3000;}
+          else if(type.equals("CC01")){cost = 3500;}
+          else if(type.equals("CCC1")){cost = 4000;}
+          else {cost = 6000;}
         Truck tr = new Truck(Integer.parseInt(idField.getText()), type, status, cost);
        System.out.println(tr);
       storage.addTruck(tr);
@@ -89,15 +87,13 @@ public class AddTruck{
     pane.setConstraints(typeBox,1,1);
     pane.setConstraints(statusLabel,0,2);
     pane.setConstraints(statusBox,1,2);
-    pane.setConstraints(costLabel,0,3);
-    pane.setConstraints(costBox,1,3);
-    pane.setConstraints(submitButton,0,4);
-    pane.setConstraints(cancelButton,1,4);
+    pane.setConstraints(submitButton,0,3);
+    pane.setConstraints(cancelButton,1,3);
 
     pane.getChildren().addAll(idLabel,idField,typeLabel,typeBox,statusLabel,statusBox,
-    costLabel,costBox,submitButton,cancelButton);
+    submitButton,cancelButton);
      Scene scene = new Scene(pane);
-     scene.getStylesheets().add("gui/style.css");
+     scene.getStylesheets().add("gui/style1.css");
      window.setScene(scene);
      window.showAndWait();
 }

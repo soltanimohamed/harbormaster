@@ -49,7 +49,7 @@ public void deleteTr(){
     pane.getChildren().addAll(label,idField,okButton,noButton);
   pane.setAlignment(Pos.CENTER);
   Scene scene = new Scene(pane);
-  scene.getStylesheets().add("gui/style.css");
+  scene.getStylesheets().add("gui/style1.css");
   window.setScene(scene);
   window.showAndWait();
 }

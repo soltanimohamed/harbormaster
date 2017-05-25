@@ -135,6 +135,24 @@ public class DBStorage implements Storage{
    return em;
   }
 
+  public Truck getTruck(int truck_id){
+    Truck tr = null;
+    if(hasConnection()){
+      try{
+        Statement stm = null;
+        String sql = "SELECT * FROM truck WHERE Truck_id="+truck_id;
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        if(rs.next()){
+        tr = new Truck(rs.getInt("Truck_id"), rs.getString("Truck_type"), rs.getString("Truck_status"),
+                        rs.getInt("Truck_cost"));
+        }
+      }catch (SQLException e) {
+        System.out.println("Problem printing truck info: " + e.getMessage());
+      }
+    }
+   return tr;
+  }
+
   public void showEmployeeProfile(int employee_id){
     String profile = "";
     if(hasConnection()){
@@ -182,6 +200,23 @@ public void modifyEmployee(int employee_id, int status_id, int schedule_id){
     }
   }
 }
+
+public void modifyTruck(int truck_id, String status){
+  if (hasConnection()) {
+    String sql = "";
+    Statement stm;
+    try {
+        sql = "UPDATE truck SET Truck_status='" + status + "' WHERE Truck_id="+truck_id;
+      System.out.println(sql);
+      stm = con.createStatement();
+      stm.executeUpdate(sql);
+    }catch (SQLException e) {
+      System.out.println("Problem modifying truck's status: " + e.getMessage());
+    }
+  }
+}
+
+
 public int inlogg(String username, String password){
     int result = 0;
     try{

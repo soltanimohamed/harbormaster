@@ -33,10 +33,10 @@ public void modifyTr(){
     if(!(idField.getText().equals(""))){
       int id = Integer.parseInt(idField.getText());
       boolean exist = storage.verifyTruck(id);
-    /*  if(exist){
-       Employee em = storage.getEmployee(id);
-        new ExecutingModifyingEm(storage, em);
-      } */
+      if(exist){
+        Truck tr = storage.getTruck(id);
+        new TruckModifying(storage, tr);
+      }
     }
     window.close();
   });
@@ -53,7 +53,7 @@ public void modifyTr(){
     pane.getChildren().addAll(label,idField,okButton,noButton);
   pane.setAlignment(Pos.CENTER);
   Scene scene = new Scene(pane);
-  scene.getStylesheets().add("gui/style.css");
+  scene.getStylesheets().add("gui/style1.css");
   window.setScene(scene);
   window.showAndWait();
 }
