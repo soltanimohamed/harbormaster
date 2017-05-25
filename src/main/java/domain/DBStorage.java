@@ -239,4 +239,18 @@ public int inlogg(String username, String password){
     return result;
   }
 
+	public void addShip(String name, String company, String volume_type){
+		if(hasConnection()){
+			Statement stm;
+			try{
+				String SQL = "INSERT INTO ship () VALUES('"+name+"', '"+company+"', '"+volume_type+"')";
+				stm = con.createStatement();
+				stm.executeQuery(SQL);
+				System.out.println("Ship " + name + " added");
+			}catch(SQLException sqle){
+				System.err.println("Error adding ship" + sqle.getStackTrace());
+			}
+		}
+	}
+
 }
