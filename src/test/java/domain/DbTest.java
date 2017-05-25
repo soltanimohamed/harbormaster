@@ -6,9 +6,4 @@ import org.junit.Before;
 
 public class DbTest {
   Connection con;
-
-@Before
-  public void before(){
-	con = 
-}
 }
