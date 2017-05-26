@@ -22,7 +22,7 @@ public class TimeFunctions {
 		this.clockTime = clockTime;
 
 		this.currentDate = yearString + "/" + convertDayOrMonthToString(month) + "/" +
-							convertDayOrMonthToString(day) + " Time: " + clockTime;	
+							convertDayOrMonthToString(day) + " Time: " + clockTime;	//Skapar utskrift av variablerna
 	}
 	
 	public int day(){ return day; }
