@@ -52,5 +52,14 @@ INSERT INTO "driving_licenses" (Driving_license_ID, Driving_license_type) VALUES
 INSERT INTO "driving_licenses" (Driving_license_ID, Driving_license_type) VALUES(8, "K");
 
 CREATE TABLE IF NOT EXISTS admin(Admin_ID integer primary key not null, username text unique, password text unique check(password not like username));
-INSERT INTO "admin" (Admin_ID, username, password) VALUES(1, "mohamed", "abc");
+INSERT INTO "admin" (Admin_ID, username, password) VALUES(1, "mohammed", "abc");
+
+CREATE TABLE IF NOT EXISTS quay(Quay_ID integer primary key not null, Name text not null, QuayShift_ID integer not null); --Återkom och kolla tabeller för volymtyper
+
+CREATE TABLE IF NOT EXISTS quay_shift(QuayShift_ID integer primary key, Ship_id integer not null, ShiftHours text unique not null check (ShiftHours in('0:00-8:00', '8:00-16:00', '16:00-00:00')), ShiftDay text not null);
+
+CREATE TABLE IF NOT EXISTS quays_volume_types(Volume_type text not null unique check(Volume_type in('A001','AA01','B001','BB01','C001','CC01','CCC1','K001')), Quay_ID integer not null check (Quay_ID in(1, 2, 3)));
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('A001', 1);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('AA01', 1);
+
 COMMIT;
