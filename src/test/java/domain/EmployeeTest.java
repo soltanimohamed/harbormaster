@@ -58,7 +58,7 @@ public class EmployeeTest {
 		e.set_schedule_ID(1);
 		assertEquals(1, e.schedule_ID());
 	}
-
+	@Test
 	public void testset_firstName() {
 		String result = em.firstName();
 		assertEquals("Alan", result);
