@@ -344,7 +344,6 @@ public int inlogg(String username, String password){
 			}
 			if(valid){
 				try{
-					//(QuayShift_ID integer primary key, Ship_id integer not null, ShiftHours integer unique not null, ShiftDay text not null);
 					String SQL = "INSERT INTO quay_shift (Quay_ID, Ship_id, ShiftHours, ShiftDay) VALUES("+q.id()+", "+
 									s.id() + ", " + hours + ", " + date +")";
 					stm = con.createStatement();
@@ -362,6 +361,7 @@ public int inlogg(String username, String password){
 		if(hasConnection()){
 			Statement stm;
 			try{
+				//Kommer inte att fungera eftersom Employee inte har någon Quay_ID
 				String SQL = "UPDATE employee SET Quay_ID="+qs.id()+" WHERE Employee_id ="+e.employee_id();
 				stm = con.createStatement();
 				stm.executeQuery(SQL);
