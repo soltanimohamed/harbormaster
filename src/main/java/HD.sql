@@ -58,8 +58,14 @@ CREATE TABLE IF NOT EXISTS quay(Quay_ID integer primary key not null, Name text 
 
 CREATE TABLE IF NOT EXISTS quay_shift(QuayShift_ID integer primary key, Ship_id integer not null, ShiftHours integer unique not null, ShiftDay text not null);
 
-CREATE TABLE IF NOT EXISTS quays_volume_types(Volume_type text not null unique check(Volume_type in('A001','AA01','B001','BB01','C001','CC01','CCC1','K001')), Quay_ID integer not null check (Quay_ID in(1, 2, 3)));
-INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('A001', 1);
-INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('AA01', 1);
+CREATE TABLE IF NOT EXISTS quays_volume_types(Volume_type text not null unique check(Volume_type in('A005','AA07','B005','BB07','C005','CC07','CCC5','K007')), Quay_ID integer not null check (Quay_ID in(1, 2, 3)));
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('A005', 1);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('AA07', 1);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('B005', 2);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('BB07', 2);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('C005', 2);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('CC07', 3);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('CCC5', 3);
+INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('K007', 3);
 
 COMMIT;
