@@ -1,7 +1,7 @@
 PRAGMA foreign_keys=ON;
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, FirstName text not null, LastName text not null, Gender text not null, Driving_license_ID integer not null, Status_ID integer not null, Schedule_ID integer, ShiftHours integer not null);
-INSERT INTO "employee" (FirstName, LastName, Gender, Driving_license_ID, Status_ID, Schedule_ID) VALUES("Jonas","Lindberg", "Male", 1, 1, 1);
+CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, FirstName text not null, LastName text not null, Gender text not null, Driving_license_ID integer not null, Status_ID integer not null, schedule_ID integer not null, ShiftHours integer not null);
+INSERT INTO "employee" (FirstName, LastName, Gender, Driving_license_ID, Status_ID, schedule_ID, shiftHours) VALUES("Jonas","Lindberg", "Male", 1, 1, 1, 1);
 
 CREATE TABLE IF NOT EXISTS employee_status(Status_ID integer primary key not null, Status text not null);
 INSERT INTO "employee_status"(Status) VALUES ('100%');
@@ -12,9 +12,9 @@ INSERT INTO "employee_status"(Status) VALUES ('Studier');
 INSERT INTO "employee_status"(Status) VALUES ('Semester');
 
 CREATE TABLE IF NOT EXISTS schedule(Schedule_ID integer primary key not null, Schedule text not null unique);
-INSERT INTO "schedule" (Schedule) VALUES('MF');
-INSERT INTO "schedule" (Schedule) VALUES('LS');
-INSERT INTO "schedule" (Schedule) VALUES('S');
+INSERT INTO "schedule"(Schedule) VALUES('MF');
+INSERT INTO "schedule"(Schedule) VALUES('LS');
+INSERT INTO "schedule"(Schedule) VALUES('S');
 
 CREATE TABLE IF NOT EXISTS ship(Ship_id integer primary key not null, Ship_name text, Company text, Volume_type text);
 INSERT INTO "ship" (Ship_name, Company, Volume_type) VALUES("Ocean","Trade","A005");
@@ -56,7 +56,8 @@ INSERT INTO "admin" (Admin_ID, username, password) VALUES(1, "mohamed", "abc");
 
 CREATE TABLE IF NOT EXISTS quay(Quay_ID integer primary key not null, Name text not null, QuayShift_ID integer not null); --Återkom och kolla tabeller för volymtyper
 
-CREATE TABLE IF NOT EXISTS quay_shift(QuayShift_ID integer primary key, Ship_id integer not null, ShiftHours integer unique not null, ShiftDay text not null);
+CREATE TABLE IF NOT EXISTS quay_shift(QuayShift_ID integer primary key, Ship_id integer not null, ShiftHours integer unique not null, ShiftDay text not null, Quay_ID integer not null);
+
 
 CREATE TABLE IF NOT EXISTS quays_volume_types(Volume_type text not null unique check(Volume_type in('A005','AA07','B005','BB07','C005','CC07','CCC5','K007')), Quay_ID integer not null check (Quay_ID in(1, 2, 3)));
 INSERT INTO quays_volume_types(Volume_type, Quay_ID) VALUES ('A005', 1);
