@@ -35,7 +35,7 @@ public class AddEmployee{
     ComboBox sexBox = new ComboBox();
     sexBox.getItems().add("Male");
     sexBox.getItems().add("Female");
-    Label driving_licenseLabel = new Label("driving_license_ID:");
+    Label driving_licenseLabel = new Label("driving_license:");
     //TextField driving_licenseField = new TextField();
     ComboBox drivingBox = new ComboBox();
     drivingBox.getItems().add("A");
@@ -46,7 +46,7 @@ public class AddEmployee{
     drivingBox.getItems().add("CC");
     drivingBox.getItems().add("CCC");
     drivingBox.getItems().add("K");
-    Label statusLabel = new Label("status_ID:");
+    Label statusLabel = new Label("status:");
     ComboBox statusBox = new ComboBox();
     statusBox.getItems().add("100%");
     statusBox.getItems().add("50%");
@@ -55,17 +55,22 @@ public class AddEmployee{
     statusBox.getItems().add("Studier");
     statusBox.getItems().add("Semester");
     //TextField statusField = new TextField();
-    Label scheduleLabel = new Label("schedule_ID:");
+    Label scheduleLabel = new Label("schedule:");
     ComboBox scheduleBox = new ComboBox();
     scheduleBox.getItems().add("MF");
     scheduleBox.getItems().add("LS");
     scheduleBox.getItems().add("S");
+    Label shiftLabel = new Label("shift:");
+    ComboBox shiftBox = new ComboBox();
+    shiftBox.getItems().add("Day");
+    shiftBox.getItems().add("Evening");
+    shiftBox.getItems().add("Night");
     //TextField scheduleField = new TextField();
     Button submitButton = new Button("ok");
     //  sexBox.getValue().toString(),
     submitButton.setOnAction( e ->{
       if(idField.equals("")  || firstNameField.getText().equals("") || lastNameField.getText().equals("") || sexBox.getValue() == null
-       || drivingBox.getValue() == null || statusBox.getValue() == null || scheduleBox.getValue() == null){
+       || drivingBox.getValue() == null || statusBox.getValue() == null || scheduleBox.getValue() == null || shiftBox.getValue() == null){
     Alerts.display("Alert","Please enter all information required");  }
      else{
        try{
@@ -77,8 +82,9 @@ public class AddEmployee{
          int drivingID = getDrivingID(drivingBox.getValue().toString());
          int statusID = getStatusID(statusBox.getValue().toString());
          int scheduleID = getScheduleID(scheduleBox.getValue().toString());
+         int shiftId = getShiftID(shiftBox.getValue().toString());
         Employee em = new Employee(Integer.parseInt(idField.getText()), firstNameField.getText(), lastNameField.getText(), sex,
-      drivingID, statusID, scheduleID);
+      drivingID, statusID, scheduleID, shiftId);
        System.out.println(em);
       storage.addEmployee(em);
     Alerts.display("Succeeded","Congratulation the employee has been added");
@@ -108,12 +114,14 @@ public class AddEmployee{
     pane.setConstraints(statusBox,1,5);
     pane.setConstraints(scheduleLabel,0,6);
     pane.setConstraints(scheduleBox,1,6);
-    pane.setConstraints(submitButton,0,7);
-    pane.setConstraints(cancelButton,1,7);
+    pane.setConstraints(shiftLabel,0,7);
+    pane.setConstraints(shiftBox,1,7);
+    pane.setConstraints(submitButton,0,8);
+    pane.setConstraints(cancelButton,1,8);
 
     pane.getChildren().addAll(idLabel,idField,firstNameLabel,
      firstNameField,lastNameLabel,lastNameField,sexLabel,sexBox,driving_licenseLabel,drivingBox,
-     statusLabel,statusBox,scheduleLabel,scheduleBox,submitButton,cancelButton);
+     statusLabel,statusBox,scheduleLabel,scheduleBox,shiftLabel,shiftBox,submitButton,cancelButton);
      Scene scene = new Scene(pane);
      scene.getStylesheets().add("gui/style1.css");
      window.setScene(scene);
@@ -146,6 +154,13 @@ public class AddEmployee{
     if(schedule.equals("MF")){ id = 1;}
     else if(schedule.equals("LS")){ id = 2;}
     else if(schedule.equals("S")){ id = 3;}
+    return id;
+  }
+  public int getShiftID(String shift){
+    int id = 0;
+    if(shift.equals("Day")){ id = 1;}
+    else if(shift.equals("Evening")){ id = 2;}
+    else if(shift.equals("Night")){ id = 3;}
     return id;
   }
 }

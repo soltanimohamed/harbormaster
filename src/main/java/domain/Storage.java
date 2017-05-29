@@ -20,4 +20,5 @@ public interface Storage{
   public Ship getShip(int ship_id);
   public boolean verifyShip(int ship_id);
   public void deleteShip(int ship_id);
+  public List<Truck> showAllTruck();
 }
