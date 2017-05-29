@@ -14,11 +14,13 @@ public interface Storage{
   public Truck getTruck(int truck_id);
   public boolean verifyTruck(int truck_id);
   public void modifyTruck(int truck_id, String status);
+  public List<Truck> showAllTruck();
   public int inlogg(String username, String password);
   public void addShip(Ship sh);
   public void modifyShip(int ship_id, String name, String company);
   public Ship getShip(int ship_id);
   public boolean verifyShip(int ship_id);
   public void deleteShip(int ship_id);
-  public List<Truck> showAllTruck();
+  public List<Ship> showAllShip();
+
 }

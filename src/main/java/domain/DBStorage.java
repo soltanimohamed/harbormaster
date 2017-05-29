@@ -363,4 +363,20 @@ public int inlogg(String username, String password){
     return allTruck;
   }
 
+  public List<Ship> showAllShip(){
+    List<Ship> allShip = new ArrayList<>();
+    try{
+      String sql = "SELECT * from ship";
+      ResultSet rs = con.createStatement().executeQuery(sql);
+      while(rs.next()){
+        Ship sh = new Ship(rs.getInt("Ship_id"),  rs.getString("Ship_name"),
+        rs.getString("Company"), rs.getString("Volume_type"));
+        allShip.add(sh);
+      }
+    }catch(Exception e){
+      System.err.println("Error: " + e.getMessage());
+    }
+    return allShip;
+  }
+
 }
