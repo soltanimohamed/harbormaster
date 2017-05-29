@@ -58,8 +58,21 @@ public class Quay {
 		else throw new Exception("Problem assigning shift to quay " + name);
 	}
 	
-	public void assignEmployee(Employee new_employee, String driving_license_type){
-		
+	public void assignQuayShift(QuayShift qs){
+		this.current_shift = qs;
+	}
+	
+	public void assignEmployee(Employee new_employee){
+		boolean validDrivingLicense = false;
+		if((this.id()==1 && new_employee.driving_license_ID() == 1) || (this.id() == 1 && new_employee.driving_license_ID() == 2)
+				|| (this.id()==2 && new_employee.driving_license_ID()==3) ||(this.id()==2 && new_employee.driving_license_ID()==4)
+				|| (this.id()==2 && new_employee.driving_license_ID()==5) ||(this.id()==3 && new_employee.driving_license_ID() == 6
+				|| (this.id()==3 && new_employee.driving_license_ID()==7)) || (this.id()==3 && new_employee.driving_license_ID()==8)){
+			validDrivingLicense = true;
+		}
+		if(validDrivingLicense){
+			this.current_shift.assignEmployee(new_employee);
+		}
 	}
 	
 	public void assignShip(Ship new_ship) throws Exception{

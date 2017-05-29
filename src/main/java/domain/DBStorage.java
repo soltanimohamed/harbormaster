@@ -1,6 +1,7 @@
 package domain;
 import java.sql.*;
 import java.util.Scanner;
+
 import java.util.ArrayList;
 import java.util.List;
 public class DBStorage implements Storage{
@@ -329,6 +330,48 @@ public int inlogg(String username, String password){
 			}
 		}
 	}
+	
+	public void assignShipToQuay(Quay q, Ship s, int hours, String date){
+		//'A005','AA07','B005','BB07','C005','CC07','CCC5','K007'
+		if(hasConnection()){
+			Statement stm;
+			boolean valid = false;
+			if((q.id()==1 && s.volume_type().equals("A005")) || (q.id() == 1 && s.volume_type().equals("AA07"))
+					|| (q.id()==2 && s.volume_type().equals("B005")) ||(q.id()==2 && s.volume_type().equals("BB07"))
+					|| (q.id()==2 && s.volume_type().equals("C005")) ||(q.id()==3 && s.volume_type().equals("CC07")
+					|| (q.id()==3 && s.volume_type().equals("CCC5"))) || (q.id()==3 && s.volume_type().equals("K007"))){
+				valid = true;
+			}
+			if(valid){
+				try{
+					//(QuayShift_ID integer primary key, Ship_id integer not null, ShiftHours integer unique not null, ShiftDay text not null);
+					String SQL = "INSERT INTO quay_shift (Quay_ID, Ship_id, ShiftHours, ShiftDay) VALUES("+q.id()+", "+
+									s.id() + ", " + hours + ", " + date +")";
+					stm = con.createStatement();
+					stm.executeQuery(SQL);
+					System.out.println("Ship " + s.id() + " assigned to quay " + q.name());
+				}catch(SQLException sqle){
+					System.err.println("Error assigning ship to quay: " + sqle.getMessage());
+				}
+			}
+			
+		}
+	}
+	
+	public void assignEmployeeToQuayShift(Employee e, QuayShift qs){
+		if(hasConnection()){
+			Statement stm;
+			try{
+				String SQL = "UPDATE employee SET Quay_ID="+qs.id()+" WHERE Employee_id ="+e.employee_id();
+				stm = con.createStatement();
+				stm.executeQuery(SQL);
+				System.out.println("Employee nr " + e.employee_id() + " has been assigned to ship " + qs.docked_ship().name() +
+									" during quay shift " + qs.id() + " during " + qs.shift_hours());
+			}catch (SQLException sqle){
+				System.err.println("Error assigning employee to quay shift: " + sqle.getMessage());
+			}
+		}
+	}
 
   public List<Employee> showAllEmployee(){
     List<Employee> allEmployee = new ArrayList<>();
@@ -378,5 +421,19 @@ public int inlogg(String username, String password){
     }
     return allShip;
   }
-
+  
+  public List<String> getAllQuayVolumeTypes(){
+	  List<String> quayVolumeTypes = new ArrayList<String>();
+	  try{
+		  String sql = "SELECT * FROM quays_volume_types";
+		  ResultSet rs = con.createStatement().executeQuery(sql);
+		  while(rs.next()){
+			  String volumeType = rs.getString("Volume_type");
+			  quayVolumeTypes.add(volumeType);
+		  }
+	  }catch(SQLException sqle){
+		  System.err.println("Error getting quay volume types: " + sqle.getMessage());
+	  }
+	  return quayVolumeTypes;
+  }
 }
