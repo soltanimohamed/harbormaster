@@ -11,6 +11,7 @@ INSERT INTO "employee_status"(Status) VALUES ('VAB');
 INSERT INTO "employee_status"(Status) VALUES ('Studier');
 INSERT INTO "employee_status"(Status) VALUES ('Semester');
 
+
 CREATE TABLE IF NOT EXISTS schedule(Schedule_ID integer primary key not null, Schedule text not null unique);
 INSERT INTO "schedule"(Schedule) VALUES('MF');
 INSERT INTO "schedule"(Schedule) VALUES('LS');

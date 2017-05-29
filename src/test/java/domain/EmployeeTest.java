@@ -14,7 +14,7 @@ public class EmployeeTest {
 	public interface Getters{}
   public interface Setters{}
 	public interface Stringers{}
-
+ 
 	@Category(NotNull.class)
 	@Test
 	public void testEmployeeNotNull() {
