@@ -28,8 +28,9 @@ public class DBStorage implements Storage{
         int driving_license_ID = em.driving_license_ID();
         int status_ID = em.status_ID();
         int schedule_ID = em.schedule_ID();
-        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender, Driving_license_ID, Status_ID, Schedule_ID) VALUES(" + employee_id +
-        	        ",'" + firstName + "','"+ lastName + "','" + gender + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID +   ")";
+        int shiftHours = em.shiftHours();
+        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender, Driving_license_ID, Status_ID, Schedule_ID, ShiftHours) VALUES(" + employee_id +
+        	        ",'" + firstName + "','"+ lastName + "','" + gender + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID + "," + shiftHours + ")";
         	System.out.println(sql);
         	stm = con.createStatement();
         	stm.executeUpdate(sql);
@@ -127,7 +128,7 @@ public class DBStorage implements Storage{
         ResultSet rs = con.createStatement().executeQuery(sql);
         if(rs.next()){
         em = new Employee(rs.getInt("Employee_ID"), rs.getString("FirstName"), rs.getString("LastName"),
-                        rs.getString("Gender"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+                        rs.getString("Gender"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"), rs.getInt("ShiftHours"));
         }
       }catch (SQLException e) {
         System.out.println("Problem printing employees profile: " + e.getMessage());
@@ -180,7 +181,7 @@ public class DBStorage implements Storage{
         ResultSet rs = con.createStatement().executeQuery(sql);
         if(rs.next()){
         Employee  em = new Employee(rs.getInt("Employee_ID"), rs.getString("FirstName"), rs.getString("LastName"),
-                        rs.getString("Gender"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+                        rs.getString("Gender"), rs.getInt("Driving_license_ID"), rs.getInt("Status_ID"), rs.getInt("Schedule_ID"), rs.getInt("ShiftHours"));
           profile =  em.toString();
         }
       }catch (SQLException e) {
@@ -307,12 +308,6 @@ public int inlogg(String username, String password){
       ResultSet rs = con.createStatement().executeQuery(sql);
       if(rs.next()){
       result = rs.getInt("admin_ID");
-        //System.out.println(result);
-    /*  }
-      else{
-        result = false;
-        System.out.println(result);
-      } */
       }
     }catch(SQLException|NullPointerException e){
       //System.err.println("Error :" + e.getMessage());
@@ -343,13 +338,29 @@ public int inlogg(String username, String password){
       while(rs.next()){
         Employee e = new Employee(rs.getInt("Employee_id"),  rs.getString("FirstName"),
         rs.getString("LastName"), rs.getString("Gender"), rs.getInt("Driving_license_ID"),
-        rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+        rs.getInt("Status_ID"), rs.getInt("Schedule_ID"), rs.getInt("ShiftHours"));
         allEmployee.add(e);
       }
     }catch(Exception e){
       System.err.println("Error: " + e.getMessage());
     }
     return allEmployee;
+  }
+
+  public List<Truck> showAllTruck(){
+    List<Truck> allTruck = new ArrayList<>();
+    try{
+      String sql = "SELECT * from truck";
+      ResultSet rs = con.createStatement().executeQuery(sql);
+      while(rs.next()){
+        Truck tr = new Truck(rs.getInt("Truck_id"),  rs.getString("Truck_type"),
+        rs.getString("Truck_status"), rs.getInt("Truck_cost"));
+        allTruck.add(tr);
+      }
+    }catch(Exception e){
+      System.err.println("Error: " + e.getMessage());
+    }
+    return allTruck;
   }
 
 }

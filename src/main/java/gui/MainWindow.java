@@ -144,6 +144,9 @@ public class MainWindow extends Application{
      new ListWindow(storage);
   });
   listTruck = new MenuItem("show all trucks...");
+  listTruck.setOnAction( e ->{
+    new ListTruck(storage);
+  });
   listShip = new MenuItem("Show all ship ...");
   listMenu.getItems().add(listEmployee);
   listMenu.getItems().add(listTruck);

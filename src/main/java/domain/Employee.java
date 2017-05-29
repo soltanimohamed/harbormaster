@@ -27,7 +27,7 @@ public String gender(){ return gender;}
 public int driving_license_ID(){ return driving_license_ID;}
 public int status_ID(){ return status_ID;}
 public int schedule_ID(){ return schedule_ID;}
-public int schiftHours(){ return shiftHours;}
+public int shiftHours(){ return shiftHours;}
 
 public void set_firstName(String firstName){this.firstName = firstName;}
 public void set_lastName(String lastName){this.lastName = lastName;}
