@@ -1,4 +1,6 @@
 package domain;
+import java.util.List;
+import java.util.ArrayList;
 public interface Storage{
   public void addEmployee(Employee e);
   public void deleteEmployee(int employee_id);
@@ -8,9 +10,14 @@ public interface Storage{
   public boolean verifyEmployee(int employee_id);
   public Employee getEmployee(int employee_id);
   public void modifyEmployee(int employee_id, int status_id, int schedule_id);
+  public List<Employee> showAllEmployee();
   public Truck getTruck(int truck_id);
   public boolean verifyTruck(int truck_id);
   public void modifyTruck(int truck_id, String status);
   public int inlogg(String username, String password);
-  public void addShip(String name, String company, String volume_type);
+  public void addShip(Ship sh);
+  public void modifyShip(int ship_id, String name, String company);
+  public Ship getShip(int ship_id);
+  public boolean verifyShip(int ship_id);
+  public void deleteShip(int ship_id);
 }

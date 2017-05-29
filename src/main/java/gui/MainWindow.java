@@ -15,6 +15,7 @@ import java.awt.Desktop;
 import java.net.*;
 import domain.*;
 public class MainWindow extends Application{
+  private TextField searchField;
   private Button searchButton;
   //private Button okButton;
   private Button logginButton;
@@ -30,9 +31,14 @@ public class MainWindow extends Application{
   private MenuItem modifyShip;
   private MenuItem deleteShip;
   private MenuItem exitApplication;
+  private Menu listMenu;
+  private MenuItem listEmployee;
+  private MenuItem listTruck;
+  private MenuItem listShip;
   private MenuBar menu;
   private BorderPane mainPane;
   private GridPane pane2;
+  private GridPane pane3;
   public static void main(String[] args) {
     launch(args);
   }
@@ -41,6 +47,7 @@ public class MainWindow extends Application{
   primaryStage.setTitle("Harbor Master");
   mainPane = new BorderPane();
   pane2 = new GridPane();
+  pane3 = new GridPane();
   logginButton = new Button("Sign in");
   logginButton.setOnAction( e ->{
     LogIn.userLogin(storage);
@@ -48,6 +55,7 @@ public class MainWindow extends Application{
       loggoutButton.setDisable(false);
       logginButton.setDisable(true);
       fileMenu.setDisable(false);
+      listMenu.setDisable(false);
   }
   });
   loggoutButton = new Button("Sign out");
@@ -57,6 +65,7 @@ public class MainWindow extends Application{
     logginButton.setDisable(false);
     loggoutButton.setDisable(true);
      fileMenu.setDisable(true);
+     listMenu.setDisable(true);
 
   });
   pane2.setPadding(new Insets(10,10,10,10));
@@ -66,8 +75,15 @@ public class MainWindow extends Application{
   pane2.setConstraints(loggoutButton,0,1);
   pane2.getChildren().addAll(logginButton,loggoutButton);
   mainPane.setRight(pane2);
+  pane3.setPadding(new Insets(10,10,10,10));
+  pane3.setVgap(8);
+  pane3.setHgap(10);
+  searchField = new TextField();
   searchButton = new Button("search");
-  mainPane.setLeft(searchButton);
+  mainPane.setLeft(pane3);
+  pane3.setConstraints(searchField, 0, 0);
+  pane3.setConstraints(searchButton, 0, 1);
+  pane3.getChildren().addAll(searchField,searchButton);
   fileMenu = new Menu("File");
   fileMenu.setDisable(true);
   addEmployee = new MenuItem("Add new Employee...");
@@ -95,8 +111,17 @@ public class MainWindow extends Application{
     new DeleteTruck(storage);
   });
   addShip = new MenuItem("Add New Ship");
+  addShip.setOnAction( e ->{
+    new AddShip(storage);
+  });
   modifyShip = new MenuItem("Modify Ship");
+  modifyShip.setOnAction( e ->{
+    new ModifyShip(storage);
+  });
   deleteShip = new MenuItem("Delete Ship");
+  deleteShip.setOnAction( e ->{
+    new DeleteShip(storage);
+  });
   exitApplication = new MenuItem("Exit");
   exitApplication.setOnAction( e -> primaryStage.close());
   fileMenu.getItems().add(addEmployee);
@@ -112,8 +137,20 @@ public class MainWindow extends Application{
   fileMenu.getItems().add(deleteShip);
   fileMenu.getItems().add(new SeparatorMenuItem());
   fileMenu.getItems().add(exitApplication);
+  listMenu = new Menu("list");
+  listMenu.setDisable(true);
+  listEmployee = new MenuItem("show all Employee...");
+ listEmployee.setOnAction( e ->{
+     new ListWindow(storage);
+  });
+  listTruck = new MenuItem("show all trucks...");
+  listShip = new MenuItem("Show all ship ...");
+  listMenu.getItems().add(listEmployee);
+  listMenu.getItems().add(listTruck);
+  listMenu.getItems().add(listShip);
   menu = new MenuBar();
   menu.getMenus().addAll(fileMenu);
+  menu.getMenus().addAll(listMenu);
   mainPane.setTop(menu);
   Scene scene = new Scene(mainPane, 600,500);
   scene.getStylesheets().add("gui/style.css");

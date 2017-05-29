@@ -33,6 +33,7 @@ public void deleteEm(){
     if(!(idField.getText().equals(""))){
       int id = Integer.parseInt(idField.getText());
       storage.deleteEmployee(id);
+      Alerts.display("Succeeded"," Employee has been removed");
       window.close();
     }
   });

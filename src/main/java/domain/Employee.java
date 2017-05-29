@@ -40,11 +40,43 @@ public boolean equals(Object o){
     if(this.employee_id() == e.employee_id){
       return true;
     }}
-    return false;}
+    return false;
+  }
+public String license(){
+  String driving = "";
+  if(driving_license_ID == 1){driving = "A";}
+  else if(driving_license_ID == 2){driving ="AA";}
+  else if(driving_license_ID == 3){driving ="B";}
+  else if(driving_license_ID == 4){driving ="BB";}
+  else if(driving_license_ID == 5){driving ="C";}
+  else if(driving_license_ID == 6){driving ="CC";}
+  else if(driving_license_ID == 7){driving ="CCC";}
+  else {driving = "K";}
+  return driving;
+  }
 
-@Override
-public String toString(){
-  return employee_id + "," + firstName + "," + lastName + "," + gender + "," + driving_license_ID + "," + status_ID + "," + schedule_ID;
-}
+  public String status(){
+    String em_status = "";
+    if(status_ID == 1){em_status = "100%";}
+    else if(status_ID == 2){em_status ="50%";}
+    else if(status_ID == 3){em_status ="Sjuk";}
+    else if(status_ID == 4){em_status ="Vab";}
+    else if(status_ID == 5){em_status ="Studier";}
+    else if(status_ID == 6){em_status ="Semester";}
+    return em_status;
+    }
 
+    public String schema(){
+      String em_schema = "";
+      if(schedule_ID == 1){em_schema = "Mon-Fry";}
+      else if(schedule_ID == 2){em_schema ="Saturday";}
+      else if(schedule_ID == 3){em_schema ="Sat-Sun";}
+      return em_schema;
+      }
+
+    @Override
+    public String toString(){
+      return employee_id + "," + firstName + "," + lastName + "," + gender +
+       "," + license() + "," + status() + "," + schema();
+    }
 }

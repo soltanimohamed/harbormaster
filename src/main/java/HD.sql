@@ -52,7 +52,7 @@ INSERT INTO "driving_licenses" (Driving_license_ID, Driving_license_type) VALUES
 INSERT INTO "driving_licenses" (Driving_license_ID, Driving_license_type) VALUES(8, "K");
 
 CREATE TABLE IF NOT EXISTS admin(Admin_ID integer primary key not null, username text unique, password text unique check(password not like username));
-INSERT INTO "admin" (Admin_ID, username, password) VALUES(1, "mohammed", "abc");
+INSERT INTO "admin" (Admin_ID, username, password) VALUES(1, "mohamed", "abc");
 
 CREATE TABLE IF NOT EXISTS quay(Quay_ID integer primary key not null, Name text not null, QuayShift_ID integer not null); --Återkom och kolla tabeller för volymtyper
 

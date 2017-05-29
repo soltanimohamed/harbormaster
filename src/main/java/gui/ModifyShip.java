@@ -14,28 +14,32 @@ import java.net.*;
 import java.util.List;
 import java.util.ArrayList;
 import domain.*;
-public class DeleteTruck{
+public class ModifyShip{
   private Storage storage;
-public DeleteTruck(Storage storage){
+public ModifyShip(Storage storage){
   this.storage = storage;
-  deleteTr();
+  modifySh();
 }
-public void deleteTr(){
+public void modifySh(){
   Stage window = new Stage();
   window.initModality(Modality.APPLICATION_MODAL);
-  window.setTitle("Delete Truck");
+  window.setTitle("Change Ship info");
   window.setMinWidth(200);
-  Label label = new Label("Enter Truck's ID:");
+  Label label = new Label("Enter Ship ID:");
   label.setId("alert-text");
   TextField idField = new TextField();
   Button okButton = new Button("ok");
   okButton.setOnAction( e ->{
     if(!(idField.getText().equals(""))){
       int id = Integer.parseInt(idField.getText());
-      storage.deleteTruck(id);
-      Alerts.display("Succeeded"," Truck has been removed");
-      window.close();
+      boolean exist = storage.verifyShip(id);
+      if(exist){
+        Ship sh = storage.getShip(id);
+        System.out.println(sh);
+        new ShipModifier(storage, sh);
+      }
     }
+    window.close();
   });
   Button noButton = new Button("cancel");
   noButton.setOnAction( e -> window.close());

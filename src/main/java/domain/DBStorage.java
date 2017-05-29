@@ -2,6 +2,7 @@ package domain;
 import java.sql.*;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.List;
 public class DBStorage implements Storage{
   private final static String DB_CON="jdbc:sqlite:harborDB";
   private static Connection con;
@@ -153,6 +154,23 @@ public class DBStorage implements Storage{
    return tr;
   }
 
+  public boolean verifyShip(int ship_id){
+      boolean exist = false;
+      if (hasConnection()) {
+      try {
+        String sql = "SELECT Ship_id FROM ship WHERE Ship_id ="+ship_id;
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        if(rs.next()){
+          exist = true;
+        }
+      }catch (SQLException e) {
+        System.out.println("Something went wrong: " + e.getMessage());
+      }
+      }
+      System.out.println(exist);
+      return exist;
+  }
+
   public void showEmployeeProfile(int employee_id){
     String profile = "";
     if(hasConnection()){
@@ -215,7 +233,71 @@ public void modifyTruck(int truck_id, String status){
     }
   }
 }
+public void addShip(Ship sh){
+  if(hasConnection()){
+    try{
+      Statement stm = null;
+      int ship_id = sh.id();
+      String name = sh.name();
+      String company = sh.company();
+      String volume_type= sh.volume_type();
+      String sql = "INSERT INTO ship(Ship_id, Ship_name, Company, Volume_type)  VALUES(" + ship_id +  ",'" + name + "','"+ company + "','" + volume_type + "')";
+      System.out.println(sql);
+      stm = con.createStatement();
+      stm.executeUpdate(sql);
+      System.out.println("the ship " + ship_id + " has been successfully added");
+    }catch(SQLException e){
+      System.out.println("Something went wrong when adding truck: " + e.getMessage());
+    }
+  }
+}
+public Ship getShip(int ship_id){
+  Ship sh = null;
+  if(hasConnection()){
+    try{
+      Statement stm = null;
+      String sql = "SELECT * FROM ship WHERE ship_id="+ship_id;
+      ResultSet rs = con.createStatement().executeQuery(sql);
+      if(rs.next()){
+      sh = new Ship(rs.getInt("Ship_id"), rs.getString("Ship_name"), rs.getString("Company"),
+                      rs.getString("Volume_type"));
+      }
+    }catch (SQLException e) {
+      System.out.println("Problem printing truck info: " + e.getMessage());
+    }
+  }
+ return sh;
+}
 
+public void modifyShip(int ship_id, String name, String company){
+  if (hasConnection()) {
+    String sql = "";
+    Statement stm;
+    try {
+        sql = "UPDATE ship SET Ship_name='" + name + "', Company='" + company + "' WHERE Ship_id="+ship_id;
+      System.out.println(sql);
+      stm = con.createStatement();
+      stm.executeUpdate(sql);
+    }catch (SQLException e) {
+      System.out.println("Problem modifying truck's status: " + e.getMessage());
+    }
+  }
+}
+
+public void deleteShip(int ship_id){
+  if (hasConnection()) {
+    try {
+      Statement stm = null;
+      String sql = "DELETE FROM ship WHERE Ship_id="+ship_id;
+      System.out.println(sql);
+      stm = con.createStatement();
+      stm.executeUpdate(sql);
+      System.out.println("The ship " + ship_id + " has been deleted from the database");
+    }catch (SQLException e) {
+      System.out.println("Problem deleting truck: " + e.getMessage());
+    }
+  }
+}
 
 public int inlogg(String username, String password){
     int result = 0;
@@ -252,5 +334,22 @@ public int inlogg(String username, String password){
 			}
 		}
 	}
+
+  public List<Employee> showAllEmployee(){
+    List<Employee> allEmployee = new ArrayList<>();
+    try{
+      String sql = "SELECT * from employee";
+      ResultSet rs = con.createStatement().executeQuery(sql);
+      while(rs.next()){
+        Employee e = new Employee(rs.getInt("Employee_id"),  rs.getString("FirstName"),
+        rs.getString("LastName"), rs.getString("Gender"), rs.getInt("Driving_license_ID"),
+        rs.getInt("Status_ID"), rs.getInt("Schedule_ID"));
+        allEmployee.add(e);
+      }
+    }catch(Exception e){
+      System.err.println("Error: " + e.getMessage());
+    }
+    return allEmployee;
+  }
 
 }
