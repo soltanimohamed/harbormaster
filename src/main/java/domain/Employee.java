@@ -8,8 +8,13 @@ private int driving_license_ID; //1: A, 2: AA, 3: B, 4: BB, 5: C, 6: CC, 7: CCC,
 private int status_ID; //1: 100%, 2: 50%, 3: Sjuk, 4: VAB, 5: Studier, 6: Semester
 private int schedule_ID; // 1: MF, 2: LS, 3: S
 private int shiftHours; // 1 : dag, 2: kväll, 3: natt
+private boolean availableForWork;
+private boolean rested;
+private int timeOffWorkCounter;
+private int quay_ID;
 
-public Employee(int employee_id, String firstName, String lastName, String gender, int driving_license_ID, int status_ID, int schedule_ID, int shiftHours){
+public Employee(int employee_id, String firstName, String lastName, String gender,
+				int driving_license_ID, int status_ID, int schedule_ID, int shiftHours){
   this.employee_id = employee_id;
   this.firstName = firstName;
   this.lastName = lastName;
@@ -18,6 +23,18 @@ public Employee(int employee_id, String firstName, String lastName, String gende
   this.status_ID = status_ID;
   this.schedule_ID = schedule_ID;
   this.shiftHours = shiftHours;
+  this.rested = true;
+  this.availableForWork = true;
+  this.timeOffWorkCounter = 0;
+  if ((driving_license_ID==1 || driving_license_ID==2)) {
+	this.quay_ID = 1;
+  }
+  else if (driving_license_ID==3 || driving_license_ID==4 || driving_license_ID==5) {
+	this.quay_ID = 2;
+  }
+  else if (driving_license_ID==6 || driving_license_ID==7 || driving_license_ID==8){
+	  this.quay_ID = 3;
+  }
 }
 
 public int employee_id(){ return employee_id;}
@@ -28,6 +45,10 @@ public int driving_license_ID(){ return driving_license_ID;}
 public int status_ID(){ return status_ID;}
 public int schedule_ID(){ return schedule_ID;}
 public int shiftHours(){ return shiftHours;}
+public boolean rested(){ return rested; }
+public boolean availableForWork(){ return availableForWork; }
+public int timeOffWorkCounter(){ return timeOffWorkCounter; }
+public int quay_ID(){ return quay_ID; }
 
 public void set_firstName(String firstName){this.firstName = firstName;}
 public void set_lastName(String lastName){this.lastName = lastName;}
@@ -36,6 +57,31 @@ public void set_driving_license_ID(int driving_license_ID){this.driving_license_
 public void set_status_ID(int status_ID){this.status_ID = status_ID;}
 public void set_schedule_ID(int schedule_ID){this.schedule_ID = schedule_ID;}
 public void set_shiftHours(int shiftHours){this.shiftHours = shiftHours;}
+
+public void advanceShift(String weekDay){
+	this.timeOffWorkCounter++;
+	if(this.timeOffWorkCounter()>0){
+		this.rested = false;
+	}
+	if(this.timeOffWorkCounter()==3){
+		this.rested = true;
+		this.timeOffWorkCounter = 0;
+	}
+	this.availableForWork = false;
+	if((weekDay.equals(TimeFunctions.daysOfTheWeek().get(0)) || weekDay.equals(TimeFunctions.daysOfTheWeek().get(1)) || 
+			weekDay.equals(TimeFunctions.daysOfTheWeek().get(2)) || weekDay.equals(TimeFunctions.daysOfTheWeek().get(3))
+			|| weekDay.equals(TimeFunctions.daysOfTheWeek().get(4))) && (schedule_ID()==1)){
+		this.availableForWork = true;
+	}
+	else if((weekDay.equals(TimeFunctions.daysOfTheWeek().get(5)) ||
+			weekDay.equals(TimeFunctions.daysOfTheWeek().get(6))) && schedule_ID()==2){
+		this.availableForWork = true;
+	}
+	else if((weekDay.equals(TimeFunctions.daysOfTheWeek().get(6))) && schedule_ID()==3){
+		this.availableForWork = true;
+	}
+}
+
 @Override
 public boolean equals(Object o){
   if( o instanceof Employee){

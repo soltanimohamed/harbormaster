@@ -8,6 +8,7 @@ public class TimeFunctions {
 	private int year;
 	private int month;
 	private int day;
+	private String weekDay;
 	private String clockTime;
 	
 	//Konstruktorn
@@ -20,12 +21,14 @@ public class TimeFunctions {
 		this.month = month;
 		this.day = day;
 		this.clockTime = clockTime;
-
+		this.weekDay = daysOfTheWeek().get(0); //Börjar på "Monday"
 		this.currentDate = yearString + "/" + convertDayOrMonthToString(month) + "/" +
-							convertDayOrMonthToString(day) + " Time: " + clockTime;	//Skapar utskrift av variablerna
+							convertDayOrMonthToString(day) + " " + this.weekDay +
+							" Time: " + clockTime;	//Skapar utskrift av variablerna
 	}
 	
 	public int day(){ return day; }
+	public String weekDay(){ return weekDay; }
 	public int month(){ return month; }
 	public int year(){ return year; }
 	public String clockTime(){ return clockTime; }
@@ -43,6 +46,12 @@ public class TimeFunctions {
 		shortMonthList.add(4); shortMonthList.add(6); shortMonthList.add(9); shortMonthList.add(11);
 		
 		return shortMonthList;
+	}
+	public static ArrayList<String> daysOfTheWeek(){
+		ArrayList<String> week = new ArrayList<String>();
+		week.add("Monday"); week.add("Tuesday"); week.add("Wednesday"); week.add("Thursday");
+		week.add("Friday"); week.add("Saturday"); week.add("Sunday");
+		return week;
 	}
 	
 	public void advanceTime(){ //hoppar fram 8 timmar i tiden och ställer in år, månad, dag och klocka som nödvändigt
@@ -93,7 +102,7 @@ public class TimeFunctions {
 	
 	public String convertDayOrMonthToString(int date){
 		//Lägger till en nolla i utskriften av dagen eller månaden
-		if(day > 9){
+		if(date > 9){
 			return Integer.toString(date);
 		}
 		return "0" + Integer.toString(date);
@@ -115,6 +124,7 @@ public class TimeFunctions {
 		}
 		else if(this.clockTime().equals("16:00")){
 			this.clockTime = "00:00";
+			advanceWeekDay(); //Ny veckodag
 			return 1; //Ny dag
 		}
 		return 0; //Inte ny dag
@@ -140,6 +150,14 @@ public class TimeFunctions {
 		}
 		this.day = this.day() + dayModifier;
 		return 0;
+	}
+	
+	public void advanceWeekDay(){ //Ändrar namnet på veckodagen till veckodagen efter den nuvarande
+		int currentWeekDay = daysOfTheWeek().indexOf(weekDay());
+		if((currentWeekDay+1)>6){
+			this.weekDay = daysOfTheWeek().get(0);
+		}
+		else this.weekDay = daysOfTheWeek().get(currentWeekDay+1);
 	}
 	
 	//Tar fram månaden till nästa månad och meddelar advanceYear om det ska bli nytt år
