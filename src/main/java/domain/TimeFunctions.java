@@ -60,7 +60,7 @@ public class TimeFunctions {
 		int newMonth = this.advanceMonth(newDay);
 		int newYear = this.advanceYear(newMonth);
 		
-		updateCurrentDate(newDay, newMonth, newYear, this.clockTime());
+		updateCurrentDate(this.day(), this.month(), this.year(), this.clockTime());
 	}
 	
 	public static void checkDayMonthYear(int day, int month, int year) throws Exception{
@@ -111,7 +111,7 @@ public class TimeFunctions {
 	//Uppdaterar utskriften av det nuvarande datumet och klockslaget
 	public void updateCurrentDate(int day, int month, int year, String clockTime){
 		this.currentDate = Integer.toString(year) + "/" + convertDayOrMonthToString(month) + "/" +
-				convertDayOrMonthToString(day) + " Time: " + clockTime;
+				convertDayOrMonthToString(day) + " " + this.weekDay() + " Time: " + clockTime;
 	}
 	
 	//Tar fram klockan till nästa skift och meddelar advanceDay om det ska bli ny dag
