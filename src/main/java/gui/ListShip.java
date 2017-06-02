@@ -44,6 +44,9 @@ public class ListShip{
         list.getItems().add(s);
       }
       addButton = new Button("Add ship");
+      addButton.setOnAction( e  ->{
+        //ObservableList<String> strings = list.getSelectionModel().getSelectedItems();
+        new AddToKaj(storage);});
       clearButton = new Button("Clear result");
       clearButton.setOnAction( e ->list.getItems().clear());
       pane1 = new GridPane();

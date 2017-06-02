@@ -30,8 +30,23 @@ public class DBStorage implements Storage{
         int status_ID = em.status_ID();
         int schedule_ID = em.schedule_ID();
         int shiftHours = em.shiftHours();
-        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender, Driving_license_ID, Status_ID, Schedule_ID, ShiftHours) VALUES(" + employee_id +
-        	        ",'" + firstName + "','"+ lastName + "','" + gender + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID + "," + shiftHours + ")";
+        if(status_ID == 1 || status_ID == 2){
+        if ((driving_license_ID==1 || driving_license_ID==2)) {
+        em.set_quay_id(1);
+        }
+        else if (driving_license_ID==3 || driving_license_ID==4 || driving_license_ID==5) {
+        em.set_quay_id(2);
+        }
+        else if (driving_license_ID==6 || driving_license_ID==7 || driving_license_ID==8){
+          em.set_quay_id(3);
+        }
+      }
+        else{
+          em.set_quay_id(0);
+        }
+
+        	String sql = "INSERT INTO employee(Employee_id,FirstName,LastName, Gender, Driving_license_ID, Status_ID, Schedule_ID, ShiftHours, QUAY_ID) VALUES(" + employee_id +
+        	        ",'" + firstName + "','"+ lastName + "','" + gender + "'," + driving_license_ID + ","+ status_ID + "," + schedule_ID + "," + shiftHours +"," + em.quay_ID() + ")";
         	System.out.println(sql);
         	stm = con.createStatement();
         	stm.executeUpdate(sql);
@@ -317,7 +332,7 @@ public int inlogg(String username, String password){
     return result;
   }
 
-	public void addShip(String name, String company, String volume_type){
+/*	public void addShip(String name, String company, String volume_type){
 		if(hasConnection()){
 			Statement stm;
 			try{
@@ -329,8 +344,8 @@ public int inlogg(String username, String password){
 				System.err.println("Error adding ship" + sqle.getStackTrace());
 			}
 		}
-	}
-	
+	} */
+
 	public void assignShipToQuay(Quay q, Ship s, int hours, String date){
 		//'A005','AA07','B005','BB07','C005','CC07','CCC5','K007'
 		if(hasConnection()){
@@ -353,10 +368,10 @@ public int inlogg(String username, String password){
 					System.err.println("Error assigning ship to quay: " + sqle.getMessage());
 				}
 			}
-			
+
 		}
 	}
-	
+
 	public void assignEmployeeToQuayShift(Employee e, QuayShift qs){
 		if(hasConnection()){
 			Statement stm;
@@ -421,7 +436,7 @@ public int inlogg(String username, String password){
     }
     return allShip;
   }
-  
+
   public List<String> getAllQuayVolumeTypes(){
 	  List<String> quayVolumeTypes = new ArrayList<String>();
 	  try{

@@ -26,15 +26,7 @@ public Employee(int employee_id, String firstName, String lastName, String gende
   this.rested = true;
   this.availableForWork = true;
   this.timeOffWorkCounter = 0;
-  if ((driving_license_ID==1 || driving_license_ID==2)) {
-	this.quay_ID = 1;
-  }
-  else if (driving_license_ID==3 || driving_license_ID==4 || driving_license_ID==5) {
-	this.quay_ID = 2;
-  }
-  else if (driving_license_ID==6 || driving_license_ID==7 || driving_license_ID==8){
-	  this.quay_ID = 3;
-  }
+
 }
 
 public int employee_id(){ return employee_id;}
@@ -57,6 +49,7 @@ public void set_driving_license_ID(int driving_license_ID){this.driving_license_
 public void set_status_ID(int status_ID){this.status_ID = status_ID;}
 public void set_schedule_ID(int schedule_ID){this.schedule_ID = schedule_ID;}
 public void set_shiftHours(int shiftHours){this.shiftHours = shiftHours;}
+public void set_quay_id(int quay_id){this.quay_ID = quay_id;}
 
 public void advanceShift(String weekDay){
 	this.timeOffWorkCounter++;
@@ -68,7 +61,7 @@ public void advanceShift(String weekDay){
 		this.timeOffWorkCounter = 0;
 	}
 	this.availableForWork = false;
-	if((weekDay.equals(TimeFunctions.daysOfTheWeek().get(0)) || weekDay.equals(TimeFunctions.daysOfTheWeek().get(1)) || 
+	if((weekDay.equals(TimeFunctions.daysOfTheWeek().get(0)) || weekDay.equals(TimeFunctions.daysOfTheWeek().get(1)) ||
 			weekDay.equals(TimeFunctions.daysOfTheWeek().get(2)) || weekDay.equals(TimeFunctions.daysOfTheWeek().get(3))
 			|| weekDay.equals(TimeFunctions.daysOfTheWeek().get(4))) && (schedule_ID()==1)){
 		this.availableForWork = true;

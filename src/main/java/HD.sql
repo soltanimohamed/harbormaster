@@ -1,7 +1,7 @@
 PRAGMA foreign_keys=ON;
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, FirstName text not null, LastName text not null, Gender text not null, Driving_license_ID integer not null, Status_ID integer not null, schedule_ID integer not null, ShiftHours integer not null);
-INSERT INTO "employee" (FirstName, LastName, Gender, Driving_license_ID, Status_ID, schedule_ID, shiftHours) VALUES("Jonas","Lindberg", "Male", 1, 1, 1, 1);
+CREATE TABLE IF NOT EXISTS employee(Employee_id integer primary key not null, FirstName text not null, LastName text not null, Gender text not null, Driving_license_ID integer not null, Status_ID integer not null, schedule_ID integer not null, ShiftHours integer not null,Quay_ID integer);
+INSERT INTO "employee" (Employee_id,FirstName, LastName, Gender, Driving_license_ID, Status_ID, schedule_ID, shiftHours,QUAY_ID) VALUES(1,"Jonas","Lindberg", "Male", 1, 1, 1, 1,1);
 
 CREATE TABLE IF NOT EXISTS employee_status(Status_ID integer primary key not null, Status text not null);
 INSERT INTO "employee_status"(Status) VALUES ('100%');
@@ -10,7 +10,6 @@ INSERT INTO "employee_status"(Status) VALUES ('Sjuk');
 INSERT INTO "employee_status"(Status) VALUES ('VAB');
 INSERT INTO "employee_status"(Status) VALUES ('Studier');
 INSERT INTO "employee_status"(Status) VALUES ('Semester');
-
 
 CREATE TABLE IF NOT EXISTS schedule(Schedule_ID integer primary key not null, Schedule text not null unique);
 INSERT INTO "schedule"(Schedule) VALUES('MF');
