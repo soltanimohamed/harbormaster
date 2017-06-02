@@ -22,5 +22,6 @@ public interface Storage{
   public boolean verifyShip(int ship_id);
   public void deleteShip(int ship_id);
   public List<Ship> showAllShip();
+  //public void advanceTime();
 
 }
