@@ -36,11 +36,6 @@ public class EmployeeTest {
 		assertEquals(1, em.shiftHours());
 	}
 
-	public static Employee em;
-	@BeforeClass
-	public static void start(){
-		em = new Employee(1,"Alan","Shearer","Male",1,1,1,1);
-	}
 	@Category(Setters.class)
 	@Test
 	public void testSetEmployee(){
@@ -60,6 +55,12 @@ public class EmployeeTest {
 		e.set_shiftHours(1);
 		assertEquals(1, e.shiftHours());
 	}
+		public static Employee em;
+		@BeforeClass
+		
+		public static void start(){
+			em = new Employee(1,"Alan","Shearer","Male",1,1,1,1);
+		}
 	@Test
 	public void testset_firstName() {
 		String result = em.firstName();
