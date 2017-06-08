@@ -7,10 +7,12 @@ public class GenerateEmployeesAll {
 
 	public static void main(String[] args) {
 		Random random = new Random();
-		int employeesTotal = 600;
 		int employeesQ1 = 165;
 		int employeesQ2 = 195;
 		int employeesQ3 = 240;
+		
+		
+		int employeesTotal = employeesQ1 + employeesQ2 + employeesQ3;
 		ArrayList<Employee> allEmployees = new ArrayList<Employee>();
 		ArrayList<Employee> q1Employees = new ArrayList<Employee>();
 		ArrayList<Employee> q2Employees = new ArrayList<Employee>();
