@@ -35,6 +35,10 @@ public class MainWindow extends Application{
   private MenuItem listEmployee;
   private MenuItem listTruck;
   private MenuItem listShip;
+  private Menu quayMenu;
+  private MenuItem listQuayShip;
+  private MenuItem listQuayEmployees;
+  private MenuItem listQuayTrucks;
   private MenuBar menu;
   private BorderPane mainPane;
   private GridPane pane2;
@@ -56,6 +60,7 @@ public class MainWindow extends Application{
       logginButton.setDisable(true);
       fileMenu.setDisable(false);
       listMenu.setDisable(false);
+      quayMenu.setDisable(false);
   }
   });
   loggoutButton = new Button("Sign out");
@@ -66,6 +71,7 @@ public class MainWindow extends Application{
     loggoutButton.setDisable(true);
      fileMenu.setDisable(true);
      listMenu.setDisable(true);
+     quayMenu.setDisable(true);
 
   });
   pane2.setPadding(new Insets(10,10,10,10));
@@ -154,9 +160,27 @@ public class MainWindow extends Application{
   listMenu.getItems().add(listEmployee);
   listMenu.getItems().add(listTruck);
   listMenu.getItems().add(listShip);
+  quayMenu = new Menu("Quay");
+  quayMenu.setDisable(true);
+  listQuayShip = new MenuItem("Show ships in quay");
+  listQuayShip.setOnAction( e ->{
+    new ListShipsInQuay(storage);
+  });
+  listQuayEmployees = new MenuItem("List Of Employees");
+  listQuayTrucks = new MenuItem("List of Trucks");
+  listQuayTrucks.setOnAction( e ->{
+    new ListTrucksQuay(storage);
+  });
+  quayMenu.getItems().add(listQuayShip);
+  quayMenu.getItems().add(listQuayEmployees);
+  listQuayEmployees.setOnAction( e ->{
+    new ListEmployeeQuay(storage);
+  });
+  quayMenu.getItems().add(listQuayTrucks);
   menu = new MenuBar();
   menu.getMenus().addAll(fileMenu);
   menu.getMenus().addAll(listMenu);
+  menu.getMenus().addAll(quayMenu);
   mainPane.setTop(menu);
   Scene scene = new Scene(mainPane, 600,500);
   scene.getStylesheets().add("gui/style.css");

@@ -15,49 +15,49 @@ import java.util.Date;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
-public class ListShip{
-  private ListView<Ship> list;
+public class QuayTrucksList{
+  private ListView<String> list;
   private BorderPane mainPane;
   private Storage storage;
+  private int kaj_id;
   private GridPane pane1;
   private Button clearButton;
-  private Button addButton;
-  private Ship ship;
-  public ListShip(Storage storage){
+  private Button exitButton;
+  public QuayTrucksList(Storage storage, int kaj_id){
     this.storage = storage;
+    this.kaj_id = kaj_id;
     createAview();
   }
   public void createAview(){
     Stage window = new Stage();
     window.initModality(Modality.APPLICATION_MODAL);
-    window.setTitle("List of Ship");
+    window.setTitle("List of Truck");
     window.setMinWidth(400);
     list = new ListView<>();
-    List<Ship> allShip = storage.showAllShip();
-      List<Ship> ships = new ArrayList<>();
+    List<Truck> allTruck = storage.showQuayTruck(kaj_id);
+      List<String> trucks = new ArrayList<>();
       int i = 1;
-      for(Ship sh : allShip){
-        ships.add(sh);
+      for(Truck tr : allTruck){
+        trucks.add(tr.toString());
         i++;
       }
       list.getItems().clear();
-      for(Ship s : ships){
+      for(String s : trucks){
         list.getItems().add(s);
-          ship = s;
       }
-      addButton = new Button("Add ship");
-      addButton.setOnAction( e  ->{
-        //ObservableList<String> strings = list.getSelectionModel().getSelectedItems();
-        new AddToKaj(ship, storage);});
+      exitButton = new Button("exit");
+      exitButton.setOnAction( e ->{
+        window.close();
+      });
       clearButton = new Button("Clear result");
       clearButton.setOnAction( e ->list.getItems().clear());
       pane1 = new GridPane();
       pane1.setVgap(10);
       pane1.setHgap(10);
       pane1.setPadding(new Insets(10,10,10,250));
-      pane1.setConstraints(addButton,0,0);
+      pane1.setConstraints(exitButton,0,0);
       pane1.setConstraints(clearButton,1,0);
-      pane1.getChildren().addAll(addButton,clearButton);
+      pane1.getChildren().addAll(exitButton,clearButton);
   mainPane = new BorderPane();
   mainPane.setCenter(list);
   mainPane.setBottom(pane1);

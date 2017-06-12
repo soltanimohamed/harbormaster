@@ -21,7 +21,7 @@ public class ListTruck{
   private Storage storage;
   private GridPane pane1;
   private Button clearButton;
-  private Button addButton;
+  private Button exitButton;
   public ListTruck(Storage storage){
     this.storage = storage;
     createAview();
@@ -43,16 +43,19 @@ public class ListTruck{
       for(String s : trucks){
         list.getItems().add(s);
       }
-      addButton = new Button("Add Truck");
+      exitButton = new Button("exit");
+      exitButton.setOnAction( e ->{
+        window.close();
+      });
       clearButton = new Button("Clear result");
       clearButton.setOnAction( e ->list.getItems().clear());
       pane1 = new GridPane();
       pane1.setVgap(10);
       pane1.setHgap(10);
       pane1.setPadding(new Insets(10,10,10,250));
-      pane1.setConstraints(addButton,0,0);
+      pane1.setConstraints(exitButton,0,0);
       pane1.setConstraints(clearButton,1,0);
-      pane1.getChildren().addAll(addButton,clearButton);
+      pane1.getChildren().addAll(exitButton,clearButton);
   mainPane = new BorderPane();
   mainPane.setCenter(list);
   mainPane.setBottom(pane1);

@@ -15,9 +15,10 @@ import java.util.Date;
 import java.text.ParseException;
 public class AddToKaj{
   private Storage storage;
-  private Truck tr;
-  public AddToKaj(Storage storage){
+  private Ship ship;;
+  public AddToKaj(Ship ship, Storage storage){
     this.storage = storage;
+    this.ship = ship;
     createAview();
   }
   public  void createAview(){
@@ -27,13 +28,19 @@ public class AddToKaj{
     window.setMinWidth(250);
     Label  shiftLabel = new Label("choose Shift:");
     ComboBox shiftBox = new ComboBox();
-    shiftBox.getItems().add("Day 08-16");
-    shiftBox.getItems().add("Evening 16-00");
-    shiftBox.getItems().add("Night 00-08");
+    shiftBox.getItems().add("08-16");
+    shiftBox.getItems().add("16-00");
+    shiftBox.getItems().add("00-08");
     Label  datumLabel = new Label("date:");
     TextField datumField = new TextField();
-
+    datumField.setPromptText("Year-Month-Day");
     Button submitButton = new Button("ok");
+    submitButton.setOnAction( e ->{
+      String shiftH = shiftBox.getValue().toString();
+      String date = datumField.getText();
+      new  AddShipToQuay(ship, storage, shiftH, date);
+      window.close();
+    });
   /*   submitButton.setOnAction( e ->{
      if(shiftBox.getValue() == null || idField.equals("") ){
     Alerts.display("Alert","Please enter shift and date");

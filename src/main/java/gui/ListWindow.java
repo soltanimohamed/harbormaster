@@ -15,13 +15,15 @@ import java.util.Date;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 public class ListWindow{
-  private ListView<String> list;
+  private ListView<Employee> list;
   private BorderPane mainPane;
   private Storage storage;
   private GridPane pane1;
   private Button clearButton;
-  private Button addButton;
+  private Button exitButton;
+  private Employee em;
   public ListWindow(Storage storage){
     this.storage = storage;
     createAview();
@@ -31,28 +33,31 @@ public class ListWindow{
     window.initModality(Modality.APPLICATION_MODAL);
     window.setTitle("List");
     window.setMinWidth(400);
-    list = new ListView<>();
+    list = new ListView<Employee>();
     List<Employee> allEmployee = storage.showAllEmployee();
-      List<String> employee = new ArrayList<>();
+      List<Employee> employee = new ArrayList<>();
       int i = 1;
       for(Employee e : allEmployee){
-        employee.add(e.toString());
+        employee.add(e);
         i++;
       }
       list.getItems().clear();
-      for(String s : employee){
+      for(Employee s : employee){
         list.getItems().add(s);
       }
-      addButton = new Button("Add Employee");
+      exitButton = new Button("exit");
+      exitButton.setOnAction( e ->{
+      window.close();
+    });
       clearButton = new Button("Clear result");
       clearButton.setOnAction( e ->list.getItems().clear());
       pane1 = new GridPane();
       pane1.setVgap(10);
       pane1.setHgap(10);
       pane1.setPadding(new Insets(10,10,10,250));
-      pane1.setConstraints(addButton,0,0);
+      pane1.setConstraints(exitButton,0,0);
       pane1.setConstraints(clearButton,1,0);
-      pane1.getChildren().addAll(addButton,clearButton);
+      pane1.getChildren().addAll(exitButton,clearButton);
   mainPane = new BorderPane();
   mainPane.setCenter(list);
   mainPane.setBottom(pane1);

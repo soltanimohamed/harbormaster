@@ -316,6 +316,21 @@ public void deleteShip(int ship_id){
   }
 }
 
+public void addShipToQuayShift(int quayShift_ID , int ship_id, String shipName, String shiftH, String date, int quay_ID){
+  if(hasConnection()){
+    try{
+      Statement stm = null;
+      String sql = "INSERT INTO quay_shift(QuayShift_ID, Ship_id, Ship_name, ShiftHours, ShiftDay, Quay_ID)  VALUES(" + quayShift_ID +  "," + ship_id + ",'" + shipName +"','"+ shiftH + "','" + date + "'," + quay_ID + ")";
+      System.out.println(sql);
+      stm = con.createStatement();
+      stm.executeUpdate(sql);
+      System.out.println("the ship " + ship_id + " has been successfully added to the Quay");
+    }catch(SQLException e){
+      System.out.println("Something went wrong when adding truck: " + e.getMessage());
+    }
+  }
+}
+
 public int inlogg(String username, String password){
     int result = 0;
     try{
@@ -332,21 +347,7 @@ public int inlogg(String username, String password){
     return result;
   }
 
-/*	public void addShip(String name, String company, String volume_type){
-		if(hasConnection()){
-			Statement stm;
-			try{
-				String SQL = "INSERT INTO ship () VALUES('"+name+"', '"+company+"', '"+volume_type+"')";
-				stm = con.createStatement();
-				stm.executeQuery(SQL);
-				System.out.println("Ship " + name + " added");
-			}catch(SQLException sqle){
-				System.err.println("Error adding ship" + sqle.getStackTrace());
-			}
-		}
-	} */
-
-	public void assignShipToQuay(Quay q, Ship s, int hours, String date){
+/*	public void assignShipToQuay(Quay q, Ship s, int hours, String date){
 		//'A005','AA07','B005','BB07','C005','CC07','CCC5','K007'
 		if(hasConnection()){
 			Statement stm;
@@ -370,7 +371,7 @@ public int inlogg(String username, String password){
 			}
 
 		}
-	}
+	} */
 
 	public void assignEmployeeToQuayShift(Employee e, QuayShift qs){
 		if(hasConnection()){
@@ -405,6 +406,27 @@ public int inlogg(String username, String password){
     return allEmployee;
   }
 
+public List<Employee> showQuayEmployee(int quayId, String shift){
+  List<Employee> allEmployeeQuay = new ArrayList<>();
+  int shiftid = 0;
+  if(shift.equals("08:00-16:00")){shiftid = 1;}
+  else if(shift.equals("16:00-00:00")){shiftid = 2;}
+  else { shiftid = 3;}
+  try{
+    String sql = "SELECT * from employee WHERE shiftHours ="+ shiftid +" AND QUAY_ID =" + quayId + " AND Status_ID IN (1, 2)" ;
+    System.out.println(sql);
+    ResultSet rs = con.createStatement().executeQuery(sql);
+    while(rs.next()){
+      Employee e = new Employee(rs.getInt("Employee_id"),  rs.getString("FirstName"),
+      rs.getString("LastName"), rs.getString("Gender"), rs.getInt("Driving_license_ID"),
+      rs.getInt("Status_ID"), rs.getInt("Schedule_ID"), rs.getInt("ShiftHours"));
+      allEmployeeQuay.add(e);
+    }
+  }catch(Exception e){
+    System.err.println("Error: " + e.getMessage());
+  }
+  return allEmployeeQuay;
+}
   public List<Truck> showAllTruck(){
     List<Truck> allTruck = new ArrayList<>();
     try{
@@ -421,6 +443,25 @@ public int inlogg(String username, String password){
     return allTruck;
   }
 
+public List<Truck> showQuayTruck(int quayId){
+  List<Truck> allTruckQuay = new ArrayList<>();
+  String sql = " ";
+  if(quayId == 1){sql = "SELECT * from truck WHERE Truck_status = 'Ok' AND Truck_type IN ('A001','AA01')";}
+  else if(quayId == 2){sql = "SELECT * from truck WHERE Truck_status = 'Ok' AND Truck_type IN ('B001','BB01','C001')";}
+  else{sql = "SELECT * from truck WHERE Truck_status = 'Ok' AND Truck_type IN ('CC01','CCC1','K001')"; }
+  try{
+    ResultSet rs = con.createStatement().executeQuery(sql);
+    while(rs.next()){
+      Truck tr = new Truck(rs.getInt("Truck_id"),  rs.getString("Truck_type"),
+      rs.getString("Truck_status"), rs.getInt("Truck_cost"));
+      allTruckQuay.add(tr);
+    }
+  }catch(Exception e){
+    System.err.println("Error: " + e.getMessage());
+  }
+  return allTruckQuay;
+}
+
   public List<Ship> showAllShip(){
     List<Ship> allShip = new ArrayList<>();
     try{
@@ -435,6 +476,29 @@ public int inlogg(String username, String password){
       System.err.println("Error: " + e.getMessage());
     }
     return allShip;
+  }
+
+  public List<String> showQuayShips(int quayId){
+    List<String> quayShips = new ArrayList<>();
+      String result = " ";
+    try{
+      String sql = "SELECT Ship_name, ShiftHours, ShiftDay from quay_shift WHERE Quay_ID = " + quayId + "";
+      ResultSet rs = con.createStatement().executeQuery(sql);
+      while(rs.next()){
+        String name = " ";
+        String hours = " ";
+        String day = " ";
+         name = rs.getString("Ship_name");
+         hours = rs.getString("ShiftHours");
+         day = rs.getString("ShiftDay");
+         result = name + " | " + hours + " | " + day;
+        quayShips.add(result);
+        result =" ";
+      }
+    }catch(Exception e){
+      System.err.println("Error: " + e.getMessage());
+    }
+    return quayShips;
   }
 
   public List<String> getAllQuayVolumeTypes(){

@@ -56,7 +56,7 @@ INSERT INTO "admin" (Admin_ID, username, password) VALUES(1, "mohamed", "abc");
 
 CREATE TABLE IF NOT EXISTS quay(Quay_ID integer primary key not null, Name text not null, QuayShift_ID integer not null); --Återkom och kolla tabeller för volymtyper
 
-CREATE TABLE IF NOT EXISTS quay_shift(QuayShift_ID integer primary key, Ship_id integer not null, ShiftHours integer unique not null, ShiftDay text not null, Quay_ID integer not null);
+CREATE TABLE IF NOT EXISTS quay_shift(QuayShift_ID integer primary key, Ship_id integer not null, Ship_name text, ShiftHours text, ShiftDay text not null, Quay_ID integer not null);
 
 
 CREATE TABLE IF NOT EXISTS quays_volume_types(Volume_type text not null unique check(Volume_type in('A005','AA07','B005','BB07','C005','CC07','CCC5','K007')), Quay_ID integer not null check (Quay_ID in(1, 2, 3)));
