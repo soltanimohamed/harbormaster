@@ -95,9 +95,9 @@ public class TimeFunctions {
 		}
 		
 		//Kollar att månaden kan ha upp till 30 dagar
-		if(day > 29 && shortMonths().contains(month)==false){
-			throw new Exception("The month doesn't have that many days");
-		}
+//		if(day > 29 && shortMonths().contains(month)==false){
+//			throw new Exception("The month doesn't have that many days");
+//		}
 	}
 	
 	public String convertDayOrMonthToString(int date){
